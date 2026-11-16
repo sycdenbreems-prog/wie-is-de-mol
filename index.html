@@ -1,0 +1,2730 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Wie is de Mol?">
+  <meta name="application-name" content="Wie is de Mol?">
+  <meta name="color-scheme" content="dark">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="theme-color" content="#0f172a">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'">
+  <title>Wie is de Mol?</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: max(clamp(12px, 3vw, 24px), env(safe-area-inset-top)) max(clamp(12px, 3vw, 24px), env(safe-area-inset-right)) max(clamp(12px, 3vw, 24px), env(safe-area-inset-bottom)) max(clamp(12px, 3vw, 24px), env(safe-area-inset-left));
+      overscroll-behavior: none;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    .app-card {
+      background-color: #1e293b;
+      width: 100%;
+      max-width: 500px;
+      border-radius: clamp(12px, 4vw, 20px);
+      padding: clamp(16px, 5vw, 28px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+      border: 1px solid #334155;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: clamp(1.5rem, 6vw, 2.2rem);
+      text-align: center;
+      color: #f59e0b;
+      margin-bottom: 0.5em;
+      letter-spacing: 0.5px;
+    }
+
+    h2 {
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
+      text-align: center;
+      color: #f59e0b;
+      margin-bottom: 0.5em;
+      letter-spacing: 0.5px;
+    }
+
+    h3 {
+      font-size: clamp(1.1rem, 4vw, 1.4rem);
+      text-align: center;
+      color: #f59e0b;
+      margin-bottom: 0.5em;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #94a3b8;
+      margin-bottom: 1.5em;
+      font-size: clamp(0.85rem, 3.5vw, 1rem);
+      line-height: 1.4;
+    }
+
+    .form-group {
+      margin-bottom: clamp(14px, 3.5vw, 20px);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #cbd5e1;
+      font-weight: 600;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+    }
+
+    input, select {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 16px;
+      background-color: #0f172a;
+      border: 1px solid #475569;
+      border-radius: 10px;
+      color: #fff;
+      font-size: clamp(0.95rem, 3.5vw, 1rem);
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml;utf8,<svg fill='%23cbd5e1' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='7 10l5 5 5-5z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 40px;
+    }
+
+    input:focus, select:focus {
+      border-color: #f59e0b;
+    }
+
+    .btn {
+      width: 100%;
+      min-height: 52px;
+      padding: 14px clamp(12px, 3vw, 20px);
+      background-color: #f59e0b;
+      color: #0f172a;
+      border: none;
+      border-radius: 10px;
+      font-size: clamp(0.95rem, 3.8vw, 1.1rem);
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-secondary {
+      background-color: #475569;
+      color: #fff;
+    }
+
+    .btn-danger {
+      background-color: #ef4444;
+      color: #fff;
+    }
+
+    .btn-success {
+      background-color: #10b981;
+      color: #fff;
+    }
+
+    .screen {
+      display: none;
+    }
+
+    .screen.active {
+      display: block;
+    }
+
+    .pot-badge {
+      background: #334155;
+      padding: clamp(8px, 2.5vw, 12px) clamp(14px, 4vw, 20px);
+      border-radius: 30px;
+      text-align: center;
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      font-weight: 800;
+      color: #10b981;
+      margin-bottom: 12px;
+      border: 1px solid #475569;
+    }
+
+    .reward-badge {
+      display: block;
+      background-color: rgba(16, 185, 129, 0.15);
+      color: #10b981;
+      border: 1px solid #10b981;
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-align: center;
+      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+      font-weight: 700;
+      margin: 0 auto 16px auto;
+      max-width: 90%;
+    }
+
+    .timer-display {
+      font-size: clamp(2.5rem, 12vw, 3.5rem);
+      font-weight: 900;
+      text-align: center;
+      color: #f59e0b;
+      margin: 12px 0;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .role-box {
+      background-color: #0f172a;
+      border: 2px dashed #f59e0b;
+      border-radius: 12px;
+      padding: clamp(16px, 5vw, 24px);
+      text-align: center;
+      margin: 16px 0;
+    }
+
+    .role-title {
+      font-size: clamp(1.5rem, 7vw, 2rem);
+      font-weight: 800;
+      color: #ef4444;
+      margin-top: 8px;
+      word-break: break-word;
+    }
+
+    .role-title.kandidaat {
+      color: #10b981;
+    }
+
+    .mode-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: clamp(0.75rem, 3vw, 0.85rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .mode-omschrijven {
+      background-color: #3b82f6;
+      color: #fff;
+    }
+
+    .mode-uitbeelden {
+      background-color: #a855f7;
+      color: #fff;
+    }
+
+    .taboo-card {
+      background-color: #0f172a;
+      border: 2px solid #334155;
+      border-radius: 12px;
+      padding: clamp(14px, 4vw, 20px);
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .action-instruction-label {
+      font-size: clamp(0.7rem, 2.8vw, 0.75rem);
+      color: #f59e0b;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+
+    .target-word {
+      font-size: clamp(1.3rem, 6vw, 1.8rem);
+      font-weight: 900;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      word-break: break-word;
+    }
+
+    .forbidden-box {
+      background-color: rgba(239, 68, 68, 0.1);
+      border: 1px solid #ef4444;
+      border-radius: 8px;
+      padding: clamp(8px, 3vw, 12px);
+      margin-top: 10px;
+    }
+
+    .forbidden-title {
+      color: #ef4444;
+      font-size: clamp(0.75rem, 3vw, 0.85rem);
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .forbidden-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .forbidden-tag {
+      background-color: #ef4444;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 15px;
+      font-size: clamp(0.75rem, 3vw, 0.85rem);
+      font-weight: 600;
+    }
+
+    .history-list {
+      background-color: #0f172a;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+      font-size: clamp(0.8rem, 3vw, 0.9rem);
+      color: #cbd5e1;
+      max-height: 140px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .history-item {
+      padding: 6px 0;
+      border-bottom: 1px solid #334155;
+      word-break: break-word;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background-color: #1e293b;
+      border-radius: 16px;
+      padding: clamp(16px, 5vw, 24px);
+      width: 100%;
+      max-width: 400px;
+      border: 1px solid #475569;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      text-align: center;
+    }
+
+    .modal-card h3 {
+      margin-bottom: 12px;
+    }
+
+    .modal-card p {
+      color: #cbd5e1;
+      margin-bottom: 20px;
+      font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+      line-height: 1.5;
+    }
+
+    .winner-box {
+      border: 2px solid #f59e0b;
+      background: linear-gradient(
+        145deg,
+        #1e293b,
+        #0f172a
+      );
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.25);
+    }
+
+    .winner-name {
+      font-size: clamp(2rem, 10vw, 3rem);
+      font-weight: 900;
+      color: #f59e0b;
+      text-align: center;
+      margin: 12px 0 6px;
+      word-break: break-word;
+    }
+
+    .winner-votes {
+      color: #10b981;
+      font-size: clamp(0.9rem, 3.5vw, 1rem);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .vote-score {
+      color: #f59e0b;
+      font-weight: 800;
+    }
+  
+    .pwa-status {
+      text-align: center;
+      font-size: clamp(0.75rem, 3vw, 0.85rem);
+      color: #94a3b8;
+      margin-top: 14px;
+      line-height: 1.4;
+    }
+    .pwa-status.ok { color: #10b981; }
+    .pwa-status.warn { color: #f59e0b; }
+  </style>
+</head>
+<body>
+
+  <div class="app-card">
+
+    <!-- SCHERM 1: Spelopzet -->
+    <div id="screen-setup" class="screen active">
+      <h1>WIE IS DE MOL?</h1>
+      <p class="subtitle">Voer de spelers in en stel de timer in om te beginnen.</p>
+
+      <div class="form-group">
+        <label for="input-players">Spelersnamen (komma-gescheiden):</label>
+        <input type="text" id="input-players" placeholder="Anna, Bert, Carla, Daan" maxlength="900" autocomplete="off">
+      </div>
+
+      <div class="form-group">
+        <label for="input-timer">Opdrachttimer (seconden):</label>
+        <input type="number" id="input-timer" value="30" min="10" max="3600" step="1" inputmode="numeric" autocomplete="off">
+      </div>
+
+      <button class="btn" data-action="startGame">Start Spel & Rollen Verdelen</button>
+      <button class="btn btn-secondary" id="btn-install" data-action="installApp" style="display:none;">📲 Installeer als app</button>
+      <p class="pwa-status" id="pwa-status" role="status" aria-live="polite">Offline-modus wordt voorbereid…</p>
+      <p class="pwa-status" id="word-stats"></p>
+    </div>
+
+    <!-- SCHERM 2: Overdracht Rol -->
+    <div id="screen-reveal-handover" class="screen">
+      <h2>SECRET REVEAL</h2>
+      <p class="subtitle" style="margin-top: 20px;">
+        Geef de telefoon aan:<br>
+        <strong id="handover-player-name" style="color: #f59e0b; font-size: clamp(1.3rem, 5vw, 1.6rem); display: block; margin-top: 10px;">-</strong>
+      </p>
+      <button class="btn" style="margin-top: 30px;" data-action="showRoleSecret">Bekijk rol</button>
+    </div>
+
+    <!-- SCHERM 3: Geheim Rol Tonen -->
+    <div id="screen-reveal-secret" class="screen">
+      <h2 id="secret-player-title">Rol van ...</h2>
+      <div class="role-box">
+        <p style="font-size: clamp(0.85rem, 3.5vw, 1rem);">Jouw geheim:</p>
+        <div id="secret-role-text" class="role-title">KANDIDAAT</div>
+      </div>
+      <button class="btn btn-secondary" data-action="confirmRoleSeen">Ik heb het gezien</button>
+    </div>
+
+    <!-- SCHERM 4: Stemrondes Instellen -->
+    <div id="screen-voting-setup" class="screen">
+      <h2>STEMRONDES INSTELLEN</h2>
+      <p class="subtitle">Iedereen kent zijn rol. Bepaal nu de frequentie van de stemrondes.</p>
+
+      <div class="form-group">
+        <label for="select-vote-freq">Voer een stemronde uit om de:</label>
+        <select id="select-vote-freq">
+          <option value="2">Om de 2 rondes</option>
+          <option value="3" selected>Om de 3 rondes</option>
+          <option value="4">Om de 4 rondes</option>
+          <option value="5">Om de 5 rondes</option>
+        </select>
+      </div>
+
+      <button class="btn" data-action="startTasksPhase">Start Spelrondes</button>
+    </div>
+
+    <!-- SCHERM 5A: Overdrachtsscherm Omschrijver / Uitbeelder -->
+    <div id="screen-task-handover" class="screen">
+      <div class="pot-badge">Pot: €<span class="pot-amount">0</span></div>
+      <h2>OPDRACHT BEURT</h2>
+      <p class="subtitle" style="margin-top: 20px;">
+        Geef de telefoon aan:<br>
+        <strong id="task-handover-player-name" style="color: #f59e0b; font-size: clamp(1.3rem, 5vw, 1.6rem); display: block; margin-top: 10px;">-</strong>
+      </p>
+      <p style="text-align: center; color: #cbd5e1; font-size: clamp(0.8rem, 3vw, 0.9rem); margin-top: 15px;">
+        Zorg dat niemand anders mee kan kijken op het scherm!
+      </p>
+      <button class="btn" style="margin-top: 24px;" data-action="handleSecretTaskStart">Ik heb de telefoon</button>
+    </div>
+
+    <!-- SCHERM 5B: Geheime Joker Optie -->
+    <div id="screen-joker-offer" class="screen">
+      <div class="pot-badge">Pot: €<span class="pot-amount">0</span></div>
+      <h2>GEHEIME KANS</h2>
+      <p class="subtitle">Laat dit scherm aan niemand anders zien!</p>
+
+      <div class="role-box" style="border-color: #10b981;">
+        <h3 style="color: #10b981;">Joker Kopen?</h3>
+        <p style="margin-top: 10px; color: #cbd5e1; font-size: clamp(0.85rem, 3.5vw, 0.95rem);">
+          Je kunt nu <strong>in het geheim</strong> 1 joker kopen voor <strong id="joker-cost-display" style="color: #f59e0b;">€0</strong> uit de pot.
+        </p>
+      </div>
+
+      <button class="btn btn-success" data-action="buyJokerSecretly">Koop Joker (Sla Opdracht Over)</button>
+      <button class="btn btn-secondary" data-action="declineJokerSecretly" style="margin-top: 10px;">Nee, Start Opdracht</button>
+    </div>
+
+    <!-- SCHERM 6: Actieve Opdracht -->
+    <div id="screen-task" class="screen">
+      <div class="pot-badge">Pot: €<span class="pot-amount">0</span></div>
+
+      <div class="reward-badge">Te verdienen: €<span id="task-reward-amount">0</span></div>
+
+      <div class="taboo-card">
+        <div class="action-instruction-label">WAT JE MOET DOEN:</div>
+        <div style="text-align: center; margin-bottom: 8px;">
+          <span id="task-mode-badge" class="mode-badge mode-omschrijven">OMSCHRIJVEN</span>
+        </div>
+
+        <p style="font-size: clamp(0.7rem, 2.8vw, 0.8rem); color: #94a3b8; text-transform: uppercase; font-weight: 700;">Te raden woord:</p>
+        <div class="target-word" id="display-target-word">WOORD</div>
+
+        <div id="forbidden-section" class="forbidden-box">
+          <div class="forbidden-title">Verboden Woorden:</div>
+          <div class="forbidden-list" id="display-forbidden-words"></div>
+        </div>
+
+        <div id="acting-section" class="forbidden-box" style="border-color: #a855f7; background: rgba(168, 85, 247, 0.1); display: none;">
+          <div class="forbidden-title" style="color: #c084fc;">Regel bij uitbeelden:</div>
+          <p style="color: #cbd5e1; font-size: clamp(0.75rem, 3vw, 0.85rem);">Je mag <strong>GEEN enkel geluid</strong> of woord gebruiken! Alleen gebaren en mimiek.</p>
+        </div>
+      </div>
+
+      <div class="timer-display" id="timer-count">00:00</div>
+
+      <button class="btn btn-success" id="btn-success-task" data-action="completeTask">Opdracht Gelukt!</button>
+    </div>
+
+    <!-- SCHERM 7: Stemronde Overdracht -->
+    <div id="screen-vote-handover" class="screen">
+      <h2>STEMRONDE</h2>
+      <p class="subtitle" style="margin-top: 20px;">
+        Geef de telefoon aan:<br>
+        <strong id="vote-handover-name" style="color: #f59e0b; font-size: clamp(1.3rem, 5vw, 1.6rem); display: block; margin-top: 10px;">-</strong>
+      </p>
+      <button class="btn" style="margin-top: 24px;" data-action="startVotingForPlayer">Start Stemmen</button>
+    </div>
+
+    <!-- SCHERM 8: Stemmen met Historie -->
+    <div id="screen-vote-action" class="screen">
+      <h2 id="vote-action-title">Stem van ...</h2>
+
+      <label>Jouw eerdere stemmen:</label>
+      <div class="history-list" id="personal-vote-history"></div>
+
+      <div class="form-group">
+        <label for="select-suspect">Wie is volgens jou de Mol?</label>
+        <select id="select-suspect"></select>
+      </div>
+
+      <button class="btn" data-action="submitVote">Stem Opslaan</button>
+    </div>
+
+    <!-- SCHERM 8.5: Keuzescherm na Stemronde -->
+    <div id="screen-post-vote-choice" class="screen">
+      <h2>STEMRONDE AFGEROND</h2>
+      <p class="subtitle">Alle stemmen zijn verzameld. Wat willen jullie nu doen?</p>
+
+      <button class="btn btn-success" data-action="continueToNextRound">Volgende Ronde Spelen</button>
+      <button class="btn btn-danger" style="margin-top: 14px;" data-action="confirmStopGame">Stop Spel & Maak Mol Bekend</button>
+    </div>
+
+    <!-- SCHERM 9: Jokers Inzetten (Eindstand) -->
+    <div id="screen-joker-edits" class="screen">
+      <h2>JOKERS INZETTEN</h2>
+      <p class="subtitle" id="joker-edit-subtitle">Speler heeft jokers om stemmen aan te passen.</p>
+
+      <div class="form-group">
+        <label for="select-edit-round">Kies de ronde waarvan je je stem wilt wijzigen:</label>
+        <select id="select-edit-round"></select>
+      </div>
+
+      <div class="form-group">
+        <label for="select-new-suspect">Nieuwe verdachte voor deze ronde:</label>
+        <select id="select-new-suspect"></select>
+      </div>
+
+      <button class="btn btn-success" data-action="applyJokerEdit">Wijzig Stem (<span id="jokers-left-count">0</span> over)</button>
+      <button class="btn btn-secondary" data-action="skipJokerEdit">Behoud Stemmen & Volgende</button>
+    </div>
+
+    <!-- SCHERM 10: Eindstand & WINNAAR -->
+    <div id="screen-results" class="screen">
+      <h2>EINDE VAN HET SPEL</h2>
+
+      <div class="pot-badge">
+        Eindpot: €<span class="pot-amount">0</span>
+      </div>
+
+      <div class="role-box winner-box">
+        <p style="font-size: clamp(0.9rem, 3.5vw, 1rem);">
+          🏆 DE WINNAAR IS
+        </p>
+
+        <div id="winner-name" class="winner-name">...</div>
+
+        <p id="winner-votes" class="winner-votes">
+          0 stemmen op de Mol
+        </p>
+      </div>
+
+      <div class="role-box">
+        <p style="font-size: clamp(0.85rem, 3.5vw, 1rem);">
+          De Mol was:
+        </p>
+
+        <div id="mol-reveal-name" class="role-title">...</div>
+      </div>
+
+      <h3>Stemmen per speler:</h3>
+
+      <div class="history-list" id="final-history-list" style="max-height: 220px;"></div>
+
+      <button class="btn" data-action="reloadPage">
+        Nieuw Spel Spelen
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Custom Modal -->
+  <div class="modal-overlay" id="custom-modal">
+    <div class="modal-card">
+      <h3 id="modal-title">Melding</h3>
+      <p id="modal-message">Bericht inhoud...</p>
+      <button class="btn" data-action="closeModal">Begrepen</button>
+    </div>
+  </div>
+
+  <script>
+// ==========================================
+// 1. OMSCHRIJVEN / TABOO (225 unieke kaarten)
+// ==========================================
+const tabooCards = [
+  // ETEN & DRINKEN
+  { word: "Stokbrood", forbidden: ["Frankrijk", "Brood", "Bakker", "Eten"] },
+  { word: "Pizza", forbidden: ["Italië", "Kaas", "Oven", "Deeg"] },
+  { word: "Sushi", forbidden: ["Rijst", "Vis", "Japan", "Zeewier"] },
+  { word: "Hamburger", forbidden: ["Broodje", "Vlees", "Fastfood", "Ketchup"] },
+  { word: "Pannenkoek", forbidden: ["Stroop", "Suiker", "Bakken", "Beslag"] },
+  { word: "Friet", forbidden: ["Aardappel", "Mayonaise", "Frituur", "Snack"] },
+  { word: "Appeltaart", forbidden: ["Kaneel", "Slagroom", "Bakken", "Fruit"] },
+  { word: "Kroket", forbidden: ["Frituur", "Mosterd", "Paneermeel", "Snack"] },
+  { word: "IJsje", forbidden: ["Koud", "Smelten", "Hoorntje", "Zomer"] },
+  { word: "Kaas", forbidden: ["Geel", "Gouda", "Koe", "Brood"] },
+  { word: "Chocolade", forbidden: ["Cacao", "Reep", "Bruin", "Snoep"] },
+  { word: "Soep", forbidden: ["Kom", "Warm", "Lepel", "Groente"] },
+  { word: "Spaghetti", forbidden: ["Italië", "Pasta", "Saus", "Slinger"] },
+  { word: "Banaan", forbidden: ["Geel", "Fruit", "Aap", "Krom"] },
+  { word: "Wortel", forbidden: ["Oranje", "Konijn", "Groente", "Bodem"] },
+  { word: "Appel", forbidden: ["Fruit", "Boom", "Rood", "Groen"] },
+  { word: "Citroen", forbidden: ["Zuur", "Geel", "Fruit", "Sap"] },
+  { word: "Stroopwafel", forbidden: ["Koek", "Zoet", "Nederland", "Warm"] },
+  { word: "Frikandel", forbidden: ["Speciaal", "Snack", "Frituur", "Lang"] },
+  { word: "Watermeloen", forbidden: ["Groen", "Rood", "Pitten", "Zomer"] },
+  { word: "Donut", forbidden: ["Rond", "Gat", "Roze", "Zoet"] },
+  { word: "Pinda", forbidden: ["Noot", "Dop", "Kaas", "Eten"] },
+  { word: "Koffie", forbidden: ["Zwart", "Boon", "Warm", "Ochtend"] },
+  { word: "Thee", forbidden: ["Zakje", "Warm", "Water", "Smaak"] },
+  { word: "Drop", forbidden: ["Zwart", "Zoet", "Zout", "Snoep"] },
+  { word: "Ananas", forbidden: ["Fruit", "Geel", "Kroon", "Pizza"] },
+  { word: "Croissant", forbidden: ["Frankrijk", "Ontbijt", "Brood", "Maan"] },
+  { word: "Komkommer", forbidden: ["Groen", "Salade", "Fris", "Schijfje"] },
+  { word: "Tomaat", forbidden: ["Rood", "Saus", "Soep", "Groente"] },
+  { word: "Popcorn", forbidden: ["Bioscoop", "Mais", "Zout", "Zoet"] },
+  { word: "Lolly", forbidden: ["Stokje", "Zuigen", "Snoep", "Zoet"] },
+  { word: "Paddenstoel", forbidden: ["Bos", "Rood", "Stippen", "Herfst"] },
+  { word: "Suikerspin", forbidden: ["Kermis", "Roze", "Stokje", "Zoet"] },
+  { word: "Taco", forbidden: ["Mexico", "Vulling", "Hard", "Saus"] },
+  { word: "Nacho", forbidden: ["Chip", "Kaas", "Oven", "Dippen"] },
+  { word: "Ui", forbidden: ["Huilen", "Ogen", "Snijden", "Groente"] },
+  { word: "Aardbei", forbidden: ["Rood", "Zomer", "Fruit", "Kroon"] },
+  { word: "Druif", forbidden: ["Wijn", "Tros", "Rond", "Fruit"] },
+  { word: "Ei", forbidden: ["Kip", "Bakken", "Koken", "Schaal"] },
+  { word: "Lasagne", forbidden: ["Pasta", "Kaas", "Oven", "Italië"] },
+  { word: "Ravioli", forbidden: ["Pasta", "Vulling", "Italië", "Saus"] },
+  { word: "Macaroni", forbidden: ["Pasta", "Kaas", "Saus", "Elleboog"] },
+  { word: "Rijst", forbidden: ["Korrel", "Koken", "Azië", "Wit"] },
+  { word: "Noodles", forbidden: ["Pasta", "Soep", "Azië", "Slierten"] },
+  { word: "Burrito", forbidden: ["Mexico", "Wrap", "Vulling", "Bonen"] },
+  { word: "Hotdog", forbidden: ["Worst", "Broodje", "Mosterd", "Ketchup"] },
+  { word: "Tosti", forbidden: ["Brood", "Kaas", "Ham", "Grill"] },
+  { word: "Brood", forbidden: ["Bakker", "Boter", "Beleg", "Snijden"] },
+  { word: "Bagel", forbidden: ["Rond", "Gat", "Brood", "Ontbijt"] },
+  { word: "Pretzel", forbidden: ["Zout", "Duitsland", "Deeg", "Knot"] },
+  { word: "Wafel", forbidden: ["Belgisch", "Zoet", "IJzer", "Stroop"] },
+  { word: "Poffertjes", forbidden: ["Klein", "Pannenkoek", "Poedersuiker", "Bakken"] },
+  { word: "Muffin", forbidden: ["Cake", "Blauw", "Bakken", "Ontbijt"] },
+  { word: "Brownie", forbidden: ["Chocolade", "Cake", "Bruin", "Bakken"] },
+  { word: "Cupcake", forbidden: ["Cake", "Glazuur", "Feest", "Muffin"] },
+  { word: "Koekje", forbidden: ["Bakken", "Zoet", "Kruimels", "Thee"] },
+  { word: "Snoep", forbidden: ["Zoet", "Suiker", "Kinderen", "Snoepwinkel"] },
+  { word: "Kauwgom", forbidden: ["Bellen", "Kauwen", "Mond", "Plakken"] },
+  { word: "Marshmallow", forbidden: ["Zacht", "Wit", "Vuur", "Zoet"] },
+  { word: "Olijf", forbidden: ["Groen", "Zout", "Pizza", "Boom"] },
+  { word: "Avocado", forbidden: ["Groen", "Pit", "Guacamole", "Fruit"] },
+  { word: "Mango", forbidden: ["Geel", "Fruit", "Tropisch", "Pit"] },
+  { word: "Kiwi", forbidden: ["Groen", "Fruit", "Bruin", "Pit"] },
+  { word: "Perzik", forbidden: ["Fruit", "Roze", "Pit", "Zacht"] },
+  { word: "Peer", forbidden: ["Fruit", "Boom", "Groen", "Vorm"] },
+  { word: "Sinaasappel", forbidden: ["Oranje", "Fruit", "Sap", "Schil"] },
+  { word: "Mandarijn", forbidden: ["Oranje", "Fruit", "Schil", "Klein"] },
+  { word: "Framboos", forbidden: ["Rood", "Fruit", "Bes", "Zacht"] },
+  { word: "Bosbes", forbidden: ["Blauw", "Fruit", "Bes", "Klein"] },
+  { word: "Braam", forbidden: ["Zwart", "Bes", "Fruit", "Doorn"] },
+  { word: "Kers", forbidden: ["Rood", "Pit", "Fruit", "Boom"] },
+  { word: "Meloen", forbidden: ["Groen", "Fruit", "Zomer", "Water"] },
+  { word: "Papaja", forbidden: ["Tropisch", "Fruit", "Oranje", "Pit"] },
+  { word: "Kokosnoot", forbidden: ["Palmboom", "Tropisch", "Melk", "Hard"] },
+  { word: "Grapefruit", forbidden: ["Zuur", "Roze", "Fruit", "Sap"] },
+  { word: "Limoen", forbidden: ["Groen", "Zuur", "Citroen", "Sap"] },
+  { word: "Passievrucht", forbidden: ["Tropisch", "Fruit", "Pitjes", "Sap"] },
+  { word: "Granaatappel", forbidden: ["Rood", "Pitjes", "Fruit", "Sap"] },
+  { word: "Vijg", forbidden: ["Fruit", "Boom", "Zoet", "Paars"] },
+  { word: "Augurk", forbidden: ["Groen", "Zuur", "Pot", "Komkommer"] },
+  { word: "Paprika", forbidden: ["Rood", "Groen", "Groente", "Peper"] },
+  { word: "Broccoli", forbidden: ["Groen", "Groente", "Kool", "Gezond"] },
+  { word: "Bloemkool", forbidden: ["Wit", "Groente", "Kool", "Koken"] },
+  { word: "Spinazie", forbidden: ["Groen", "Groente", "Blad", "Popeye"] },
+  { word: "Mais", forbidden: ["Geel", "Kolf", "Popcorn", "Groente"] },
+  { word: "Pompoen", forbidden: ["Oranje", "Halloween", "Soep", "Groot"] },
+  { word: "Courgette", forbidden: ["Groen", "Groente", "Lang", "Koken"] },
+  { word: "Aubergine", forbidden: ["Paars", "Groente", "Lang", "Koken"] },
+  { word: "Champignon", forbidden: ["Paddenstoel", "Wit", "Pizza", "Bos"] },
+  { word: "Radijs", forbidden: ["Rood", "Groente", "Rond", "Salade"] },
+  { word: "Biet", forbidden: ["Rood", "Groente", "Paars", "Aarde"] },
+  { word: "Prei", forbidden: ["Groen", "Wit", "Groente", "Soep"] },
+  { word: "Knoflook", forbidden: ["Teentje", "Wit", "Geur", "Koken"] },
+  { word: "Selderij", forbidden: ["Groen", "Groente", "Soep", "Stengel"] },
+  { word: "Sla", forbidden: ["Groen", "Salade", "Blad", "Groente"] },
+  { word: "Aardappel", forbidden: ["Friet", "Knol", "Grond", "Groente"] },
+  { word: "Erwt", forbidden: ["Groen", "Klein", "Peul", "Groente"] },
+  { word: "Bonen", forbidden: ["Groen", "Peul", "Chili", "Groente"] },
+  { word: "Linzen", forbidden: ["Soep", "Klein", "Peul", "Rood"] },
+  { word: "Yoghurt", forbidden: ["Melk", "Zuivel", "Bakje", "Ontbijt"] },
+  { word: "Melk", forbidden: ["Koe", "Wit", "Drinken", "Zuivel"] },
+  { word: "Boter", forbidden: ["Brood", "Geel", "Smeren", "Melk"] },
+  { word: "Room", forbidden: ["Slagroom", "Melk", "Wit", "Dessert"] },
+  { word: "Honing", forbidden: ["Bij", "Zoet", "Geel", "Pot"] },
+  { word: "Jam", forbidden: ["Brood", "Fruit", "Zoet", "Smeren"] },
+  { word: "Pindakaas", forbidden: ["Pinda", "Brood", "Smeren", "Pot"] },
+  { word: "Mosterd", forbidden: ["Geel", "Hotdog", "Saus", "Pittig"] },
+  { word: "Ketchup", forbidden: ["Tomaat", "Rood", "Saus", "Friet"] },
+  { word: "Mayonaise", forbidden: ["Wit", "Saus", "Friet", "Ei"] },
+
+  // DIEREN
+  { word: "Hond", forbidden: ["Blaffen", "Huisdier", "Uitlaten", "Poot"] },
+  { word: "Kat", forbidden: ["Miauwen", "Snorharen", "Muis", "Huisdier"] },
+  { word: "Olifant", forbidden: ["Slurf", "Grijs", "Groot", "Oren"] },
+  { word: "Giraffe", forbidden: ["Nek", "Lang", "Afrika", "Vlekken"] },
+  { word: "Aap", forbidden: ["Banaan", "Jungle", "Klimmen", "Staart"] },
+  { word: "Pinguïn", forbidden: ["Koud", "Antarctica", "Vogel", "Zwart-Wit"] },
+  { word: "Krokodil", forbidden: ["Tanden", "Reptiel", "Groen", "Rivier"] },
+  { word: "Kangoeroe", forbidden: ["Springen", "Buidel", "Australië", "Dier"] },
+  { word: "Slang", forbidden: ["Kruipen", "Gif", "Sissen", "Reptiel"] },
+  { word: "Vogel", forbidden: ["Vliegen", "Veren", "Nest", "Snavel"] },
+  { word: "Leeuw", forbidden: ["Koning", "Afrika", "Manen", "Brullen"] },
+  { word: "Beer", forbidden: ["Bruin", "Bos", "Honing", "Klauw"] },
+  { word: "Muis", forbidden: ["Kaas", "Staart", "Klein", "Kat"] },
+  { word: "Schildpad", forbidden: ["Traag", "Schild", "Groen", "Zee"] },
+  { word: "Haai", forbidden: ["Tanden", "Zee", "Vis", "Vin"] },
+  { word: "Dolfijn", forbidden: ["Zee", "Springen", "Slim", "Zoogdier"] },
+  { word: "Kip", forbidden: ["Ei", "Haan", "Veren", "Boerderij"] },
+  { word: "Varken", forbidden: ["Roze", "Modder", "Snuit", "Boerderij"] },
+  { word: "Eend", forbidden: ["Kwek", "Water", "Vogel", "Snavel"] },
+  { word: "Vlinder", forbidden: ["Vliegen", "Kleuren", "Rups", "Mooi"] },
+  { word: "Spin", forbidden: ["Web", "Acht", "Poten", "Bang"] },
+  { word: "Kameel", forbidden: ["Bult", "Woestijn", "Zand", "Rijden"] },
+  { word: "Kwal", forbidden: ["Zee", "Prikken", "Doorzichtig", "Water"] },
+  { word: "Papegaai", forbidden: ["Praten", "Vogel", "Piraat", "Kleuren"] },
+  { word: "Vleermuis", forbidden: ["Nacht", "Grot", "Zwart", "Vliegen"] },
+  { word: "Mug", forbidden: ["Prikken", "Jeuk", "Zomer", "Vliegen"] },
+  { word: "Uil", forbidden: ["Nacht", "Ogen", "Wijs", "Vogel"] },
+  { word: "Panda", forbidden: ["Zwart", "Wit", "Bamboe", "China"] },
+  { word: "Zebra", forbidden: ["Strepen", "Zwart", "Wit", "Paard"] },
+  { word: "Walvis", forbidden: ["Groot", "Oceaan", "Blazen", "Vis"] },
+  { word: "Egel", forbidden: ["Stekels", "Rond", "Herfst", "Klein"] },
+  { word: "Flamingo", forbidden: ["Roze", "Poot", "Vogel", "Staan"] },
+  { word: "Kikker", forbidden: ["Groen", "Springen", "Kwak", "Sloot"] },
+  { word: "Krab", forbidden: ["Schaar", "Strand", "Zijwaarts", "Zee"] },
+  { word: "Koe", forbidden: ["Melk", "Gras", "Vlekken", "Loeien"] },
+  { word: "Paard", forbidden: ["Rijden", "Zadel", "Hoef", "Hinniken"] },
+  { word: "Konijn", forbidden: ["Oren", "Wortel", "Hok", "Springen"] },
+  { word: "Dinosaurus", forbidden: ["Uitgestorven", "Groot", "Botten", "T-Rex"] },
+  { word: "Bij", forbidden: ["Honing", "Prikken", "Geel", "Zwart"] },
+  { word: "Slak", forbidden: ["Langzaam", "Huisje", "Slijm", "Spoor"] },
+  { word: "Geit", forbidden: ["Baard", "Melk", "Berg", "Mekken"] },
+  { word: "Schaap", forbidden: ["Wol", "Wit", "Boerderij", "Bèè"] },
+  { word: "Ezel", forbidden: ["Langoren", "Boerderij", "Grijs", "Balken"] },
+  { word: "Stier", forbidden: ["Koe", "Hoorns", "Rood", "Boerderij"] },
+  { word: "Haan", forbidden: ["Kip", "Kraaien", "Veren", "Boerderij"] },
+  { word: "Kuiken", forbidden: ["Geel", "Kip", "Ei", "Klein"] },
+  { word: "Gans", forbidden: ["Kwakken", "Vogel", "Water", "Veren"] },
+  { word: "Kalkoen", forbidden: ["Thanksgiving", "Vogel", "Staart", "Feest"] },
+  { word: "Hert", forbidden: ["Gewei", "Bos", "Rendier", "Dier"] },
+  { word: "Vos", forbidden: ["Rood", "Slim", "Bos", "Staart"] },
+  { word: "Wolf", forbidden: ["Huilen", "Roedel", "Bos", "Hond"] },
+  { word: "Tijger", forbidden: ["Strepen", "Kat", "Oranje", "Jungle"] },
+  { word: "Luipaard", forbidden: ["Vlekken", "Kat", "Afrika", "Snel"] },
+  { word: "Neushoorn", forbidden: ["Hoorn", "Grijs", "Groot", "Afrika"] },
+  { word: "Nijlpaard", forbidden: ["Water", "Groot", "Afrika", "Gras"] },
+  { word: "Zeehond", forbidden: ["Zee", "Vin", "Strand", "Snorharen"] },
+  { word: "Walrus", forbidden: ["Slagtanden", "Zee", "Snorharen", "Groot"] },
+  { word: "Orka", forbidden: ["Zwart", "Wit", "Zee", "Walvis"] },
+  { word: "Zeeleeuw", forbidden: ["Zee", "Flippers", "Circus", "Snorharen"] },
+  { word: "Octopus", forbidden: ["Acht", "Armen", "Zee", "Inkt"] },
+  { word: "Inktvis", forbidden: ["Inkt", "Zee", "Tentakels", "Dier"] },
+  { word: "Kreeft", forbidden: ["Schaar", "Zee", "Rood", "Eten"] },
+  { word: "Garnaal", forbidden: ["Klein", "Zee", "Roze", "Eten"] },
+  { word: "Zeester", forbidden: ["Zee", "Vijf", "Ster", "Strand"] },
+  { word: "Zeepaardje", forbidden: ["Zee", "Paard", "Klein", "Vis"] },
+  { word: "Rog", forbidden: ["Zee", "Vleugels", "Vis", "Plat"] },
+  { word: "Tonijn", forbidden: ["Vis", "Blik", "Zee", "Eten"] },
+  { word: "Zalm", forbidden: ["Vis", "Rood", "Rivier", "Eten"] },
+  { word: "Forel", forbidden: ["Vis", "Rivier", "Vissen", "Water"] },
+  { word: "Karper", forbidden: ["Vis", "Vijver", "Vissen", "Water"] },
+  { word: "Sardine", forbidden: ["Vis", "Blik", "Klein", "Zee"] },
+  { word: "Makreel", forbidden: ["Vis", "Zee", "Blauw", "Vissen"] },
+  { word: "Haring", forbidden: ["Vis", "Zout", "Zee", "Eten"] },
+  { word: "Pad", forbidden: ["Kikker", "Groen", "Springen", "Sloot"] },
+  { word: "Salamander", forbidden: ["Amfibie", "Water", "Staart", "Klein"] },
+  { word: "Kameleon", forbidden: ["Kleur", "Tong", "Reptiel", "Veranderen"] },
+  { word: "Hagedis", forbidden: ["Reptiel", "Staart", "Schubben", "Kruipen"] },
+  { word: "Cobra", forbidden: ["Slang", "Gif", "India", "Hals"] },
+  { word: "Python", forbidden: ["Slang", "Groot", "Wurg", "Reptiel"] },
+  { word: "Alligator", forbidden: ["Krokodil", "Florida", "Tanden", "Groen"] },
+  { word: "Arend", forbidden: ["Vogel", "Vliegen", "Klauwen", "Scherp"] },
+  { word: "Havik", forbidden: ["Vogel", "Roofvogel", "Vliegen", "Klauwen"] },
+  { word: "Valk", forbidden: ["Roofvogel", "Vliegen", "Snel", "Jagen"] },
+  { word: "Zwaan", forbidden: ["Wit", "Water", "Vogel", "Nek"] },
+  { word: "Duif", forbidden: ["Vogel", "Stad", "Vliegen", "Koeren"] },
+  { word: "Meeuw", forbidden: ["Strand", "Vogel", "Zee", "Friet"] },
+  { word: "Kraai", forbidden: ["Zwart", "Vogel", "Kraaien", "Slim"] },
+  { word: "Raaf", forbidden: ["Zwart", "Vogel", "Kraai", "Mysterie"] },
+  { word: "Pauw", forbidden: ["Staart", "Kleuren", "Vogel", "Ogen"] },
+  { word: "Ooievaar", forbidden: ["Baby", "Nest", "Vogel", "Lange poten"] },
+  { word: "Pelikaan", forbidden: ["Snavel", "Vogel", "Water", "Vis"] },
+  { word: "Toekan", forbidden: ["Snavel", "Vogel", "Tropisch", "Kleuren"] },
+  { word: "Struisvogel", forbidden: ["Groot", "Vogel", "Rennen", "Afrika"] },
+  { word: "Emoe", forbidden: ["Vogel", "Australië", "Groot", "Rennen"] },
+  { word: "Koala", forbidden: ["Australië", "Bomen", "Eucalyptus", "Grijs"] },
+  { word: "Lama", forbidden: ["Spugen", "Wol", "Berg", "Zuid-Amerika"] },
+  { word: "Alpaca", forbidden: ["Wol", "Lama", "Zacht", "Berg"] },
+  { word: "Bizon", forbidden: ["Buffel", "Groot", "Amerika", "Kudde"] },
+  { word: "Buffel", forbidden: ["Koe", "Groot", "Hoorns", "Afrika"] },
+  { word: "Wasbeer", forbidden: ["Masker", "Nacht", "Vuilnisbak", "Staart"] },
+  { word: "Bever", forbidden: ["Dam", "Water", "Tanden", "Knaagdier"] },
+  { word: "Otter", forbidden: ["Water", "Zwemmen", "Vis", "Speels"] },
+  { word: "Eekhoorn", forbidden: ["Eikel", "Staart", "Boom", "Klein"] },
+  { word: "Das", forbidden: ["Zwart-Wit", "Bos", "Graven", "Dier"] },
+  { word: "Stekelvarken", forbidden: ["Stekels", "Knaagdier", "Groot", "Afrika"] },
+  { word: "Luiaard", forbidden: ["Langzaam", "Boom", "Slapen", "Dier"] },
+  { word: "Gorilla", forbidden: ["Aap", "Groot", "Sterk", "Jungle"] },
+  { word: "Chimpansee", forbidden: ["Aap", "Slim", "Jungle", "Dier"] },
+  { word: "Orang-oetan", forbidden: ["Aap", "Oranje", "Bomen", "Indonesië"] },
+  { word: "Baviaan", forbidden: ["Aap", "Afrika", "Staart", "Billen"] },
+  { word: "Lemur", forbidden: ["Madagaskar", "Staart", "Aap", "Ogen"] },
+  { word: "Miereneter", forbidden: ["Mieren", "Lange snuit", "Tong", "Dier"] },
+  { word: "Vogelspin", forbidden: ["Spin","Groot","Haren","Gif"] },
+  { word: "Sprinkhaan", forbidden: ["Springen","Insect","Gras","Poten"] },
+  { word: "Libel", forbidden: ["Vleugels","Water","Insect","Vliegen"] },
+  { word: "Lieveheersbeestje", forbidden: ["Rood","Stippen","Insect","Geluk"] },
+  { word: "Rups", forbidden: ["Vlinder","Groen","Bladeren","Insect"] },
+  { word: "Worm", forbidden: ["Grond","Kruipen","Aarde","Vissen"] },
+  { word: "Vlo", forbidden: ["Hond","Springen","Klein","Jeuk"] },
+  { word: "Teek", forbidden: ["Beten","Hond","Bos","Bloed"] },
+  { word: "Schorpioen", forbidden: ["Staart","Gif","Woestijn","Schaar"] },
+  { word: "Wesp", forbidden: ["Geel","Zwart","Prikken","Insect"] },
+  { word: "Mot", forbidden: ["Vlinder","Nacht","Vleugels","Licht"] },
+  { word: "Vlieg", forbidden: ["Zoemen","Insect","Vleugels","Keuken"] },
+  { word: "Mier", forbidden: ["Klein","Kolonie","Insect","Suiker"] },
+  { word: "Wandelende tak", forbidden: ["Insect","Tak","Camouflage","Poten"] },
+  { word: "Zeeotter", forbidden: ["Zee","Water","Zwemmen","Otter"] },
+  { word: "Zeeduivel", forbidden: ["Zee","Vis","Diep","Tanden"] },
+
+  // VOORWERPEN
+  { word: "Telefoon", forbidden: ["Bellen","Scherm","Appen","Mobiel"] },
+  { word: "Fiets", forbidden: ["Trappen","Wielen","Stuur","Zadel"] },
+  { word: "Gitaar", forbidden: ["Muziek","Snaren","Spelen","Instrument"] },
+  { word: "Paraplu", forbidden: ["Regen","Nat","Droog","Scherm"] },
+  { word: "Sleutel", forbidden: ["Deur","Slot","Openen","Metaal"] },
+  { word: "Zaklamp", forbidden: ["Licht","Donker","Batterij","Schijnen"] },
+  { word: "Tandenborstel", forbidden: ["Poetsen","Mond","Pasta","Schoon"] },
+  { word: "Bril", forbidden: ["Ogen","Kijken","Glazen","Zien"] },
+  { word: "Klok", forbidden: ["Tijd","Uur","Muur","Kijken"] },
+  { word: "Spiegel", forbidden: ["Kijken","Glas","Reflectie","Gezicht"] },
+  { word: "Auto", forbidden: ["Rijden","Wielen","Stuur","Motor"] },
+  { word: "Boek", forbidden: ["Lezen","Bladzijde","Papier","Verhaal"] },
+  { word: "Stoel", forbidden: ["Zitten","Poten","Tafel","Meubel"] },
+  { word: "Schoen", forbidden: ["Voet","Lopen","Veter","Aantrekken"] },
+  { word: "Rugzak", forbidden: ["Dragen","School","Tas","Rits"] },
+  { word: "Tafel", forbidden: ["Meubel","Stoel","Eten","Poten"] },
+  { word: "Bed", forbidden: ["Slapen","Nacht","Matras","Kussen"] },
+  { word: "Horloge", forbidden: ["Pols","Tijd","Laat","Kijken"] },
+  { word: "Schaar", forbidden: ["Knippen","Papier","Scherp","Twee"] },
+  { word: "Kam", forbidden: ["Haar","Borstel","Netjes","Hoofd"] },
+  { word: "Zeep", forbidden: ["Wassen","Schoon","Handen","Bubbels"] },
+  { word: "Hamer", forbidden: ["Spijker","Gereedschap","Slaan","Hout"] },
+  { word: "Koffer", forbidden: ["Vakantie","Inpakken","Kleren","Reizen"] },
+  { word: "Kaars", forbidden: ["Licht","Vuur","Smelten","Vlam"] },
+  { word: "Ballon", forbidden: ["Lucht","Feest","Blazen","Knappen"] },
+  { word: "Wasmachine", forbidden: ["Kleren","Schoon","Zeep","Draaien"] },
+  { word: "Stofzuiger", forbidden: ["Zuigen","Stof","Vloer","Schoon"] },
+  { word: "Ladder", forbidden: ["Klimmen","Hoog","Trede","Muur"] },
+  { word: "Microfoon", forbidden: ["Zingen","Geluid","Praten","Podium"] },
+  { word: "Piano", forbidden: ["Muziek","Toetsen","Zwart","Wit"] },
+  { word: "Verrekijker", forbidden: ["Ver","Kijken","Ogen","Scherp"] },
+  { word: "Portemonnee", forbidden: ["Geld","Pasjes","Zak","Betalen"] },
+  { word: "Televisie", forbidden: ["Kijken","Scherm","Film","Zender"] },
+  { word: "Computer", forbidden: ["Toetsenbord","Scherm","Muis","Internet"] },
+  { word: "Kussen", forbidden: ["Bed","Hoofd","Zacht","Slapen"] },
+  { word: "Handdoek", forbidden: ["Afdrogen","Douche","Nat","Bad"] },
+  { word: "Bezem", forbidden: ["Vegen","Heks","Vloer","Stof"] },
+  { word: "Emmer", forbidden: ["Water","Schoonmaken","Plastic","Sop"] },
+  { word: "Gieter", forbidden: ["Plant","Water","Tuin","Gieten"] },
+  { word: "Schep", forbidden: ["Zand","Graven","Tuin","Strand"] },
+  { word: "Kettingzaag", forbidden: ["Bomen","Hout","Zagen","Lawaai"] },
+  { word: "Muts", forbidden: ["Hoofd","Koud","Winter","Warm"] },
+  { word: "Jas", forbidden: ["Koud","Aantrekken","Rits","Buiten"] },
+  { word: "Ring", forbidden: ["Vinger","Goud","Trouwen","Sieraad"] },
+  { word: "Trommel", forbidden: ["Muziek","Slaan","Stokken","Ritme"] },
+  { word: "Vlieger", forbidden: ["Wind","Lucht","Touw","Strand"] },
+  { word: "Strijkijzer", forbidden: ["Kreukels","Kleren","Heet","Glad"] },
+  { word: "Envelop", forbidden: ["Brief","Post","Postzegel","Papier"] },
+  { word: "Batterij", forbidden: ["Stroom","Apparaat","Plus","Min"] },
+  { word: "Laptop", forbidden: ["Computer","Scherm","Toetsenbord","Dichtklappen"] },
+  { word: "Tablet", forbidden: ["Scherm","App","Touchscreen","Computer"] },
+  { word: "Toetsenbord", forbidden: ["Typen","Toetsen","Computer","Letters"] },
+  { word: "Computermuis", forbidden: ["Computer","Klikken","Cursor","Draad"] },
+  { word: "Printer", forbidden: ["Papier","Printen","Computer","Inkt"] },
+  { word: "Camera", forbidden: ["Foto","Filmen","Lens","Flits"] },
+  { word: "Drone", forbidden: ["Vliegen","Camera","Besturen","Lucht"] },
+  { word: "Koptelefoon", forbidden: ["Muziek","Oren","Geluid","Luisteren"] },
+  { word: "Oortjes", forbidden: ["Oren","Muziek","Draadloos","Luisteren"] },
+  { word: "Luidspreker", forbidden: ["Geluid","Muziek","Hard","Box"] },
+  { word: "Radio", forbidden: ["Muziek","Luisteren","Zender","Geluid"] },
+  { word: "Oplader", forbidden: ["Batterij","Stroom","Telefoon","Kabel"] },
+  { word: "USB-stick", forbidden: ["Computer","Bestanden","Opslag","USB"] },
+  { word: "Gamecontroller", forbidden: ["Spel","Knoppen","Gamen","Console"] },
+  { word: "Afstandsbediening", forbidden: ["Televisie","Knoppen","Zappen","Batterij"] },
+  { word: "Projector", forbidden: ["Scherm","Film","Licht","Presentatie"] },
+  { word: "Scanner", forbidden: ["Papier","Computer","Kopiëren","Document"] },
+  { word: "Rekenmachine", forbidden: ["Rekenen","Cijfers","Som","School"] },
+  { word: "Pen", forbidden: ["Schrijven","Inkt","Papier","Blauw"] },
+  { word: "Potlood", forbidden: ["Schrijven","Hout","Gum","Grijs"] },
+  { word: "Gum", forbidden: ["Potlood","Uitwissen","Papier","School"] },
+  { word: "Liniaal", forbidden: ["Meten","Centimeter","Recht","School"] },
+  { word: "Etui", forbidden: ["Pennen","School","Tas","Rits"] },
+  { word: "Agenda", forbidden: ["Datum","School","Planning","Kalender"] },
+  { word: "Kalender", forbidden: ["Maand","Jaar","Datum","Dagen"] },
+  { word: "Kaart", forbidden: ["Route","Papier","Reizen","Plaats"] },
+  { word: "Globe", forbidden: ["Aarde","Wereld","Rond","Kaart"] },
+  { word: "Kompas", forbidden: ["Noord","Richting","Pijl","Reizen"] },
+  { word: "Vergrootglas", forbidden: ["Groot","Kijken","Glas","Lezen"] },
+  { word: "Meetlint", forbidden: ["Meten","Centimeter","Rol","Lengte"] },
+  { word: "Zandloper", forbidden: ["Zand","Tijd","Lopen","Glas"] },
+  { word: "Thermometer", forbidden: ["Temperatuur","Warm","Koud","Meten"] },
+  { word: "Dobbelsteen", forbidden: ["Spel","Zes","Gooien","Ogen"] },
+  { word: "Puzzelstuk", forbidden: ["Puzzel","Leggen","Stukje","Karton"] },
+  { word: "Jojo", forbidden: ["Touw","Op en neer","Spelen","Draaien"] },
+  { word: "Knuffelbeer", forbidden: ["Zacht","Beer","Kind","Slapen"] },
+  { word: "Pop", forbidden: ["Speelgoed","Kind","Haar","Kleding"] },
+  { word: "Lego", forbidden: ["Blokken","Bouwen","Steentjes","Spelen"] },
+  { word: "Bal", forbidden: ["Gooien","Vangen","Rond","Spel"] },
+  { word: "Frisbee", forbidden: ["Gooien","Vangen","Rond","Park"] },
+  { word: "Touw", forbidden: ["Trekken","Klimmen","Springen","Draad"] },
+  { word: "Hoed", forbidden: ["Hoofd","Dragen","Pet","Kleding"] },
+  { word: "Pet", forbidden: ["Hoofd","Zon","Klep","Dragen"] },
+  { word: "Sjaal", forbidden: ["Nek","Winter","Warm","Kleding"] },
+  { word: "Handschoen", forbidden: ["Hand","Vingers","Winter","Warm"] },
+  { word: "Riem", forbidden: ["Broek","Taille","Gesp","Dragen"] },
+  { word: "Sok", forbidden: ["Voet","Schoen","Kleding","Paar"] },
+  { word: "Laars", forbidden: ["Voet","Regen","Schoen","Modder"] },
+  { word: "Zwemring", forbidden: ["Water","Zwemmen","Opblazen","Rond"] },
+  { word: "Duikbril", forbidden: ["Zwemmen","Ogen","Water","Duiken"] },
+  { word: "Snorkel", forbidden: ["Zwemmen","Water","Ademen","Duiken"] },
+  { word: "Koelkast", forbidden: ["Koud","Eten","Keuken","Deur"] },
+  { word: "Oven", forbidden: ["Warm","Bakken","Keuken","Deur"] },
+  { word: "Magnetron", forbidden: ["Warm","Eten","Keuken","Draaien"] },
+  { word: "Vaatwasser", forbidden: ["Borden","Afwassen","Keuken","Water"] },
+  { word: "Waterkoker", forbidden: ["Water","Thee","Koken","Heet"] },
+  { word: "Broodrooster", forbidden: ["Brood","Toast","Warm","Keuken"] },
+  { word: "Blender", forbidden: ["Mixen","Fruit","Smoothie","Keuken"] },
+  { word: "Mixer", forbidden: ["Bakken","Beslag","Keuken","Kloppen"] },
+  { word: "Koekenpan", forbidden: ["Bakken","Olie","Keuken","Ei"] },
+  { word: "Vergiet", forbidden: ["Water","Pasta","Keuken","Afgieten"] },
+  { word: "Snijplank", forbidden: ["Snijden","Keuken","Mes","Groente"] },
+  { word: "Pollepel", forbidden: ["Soep","Lepel","Keuken","Roeren"] },
+  { word: "Spatel", forbidden: ["Bakken","Keuken","Omdraaien","Pan"] },
+  { word: "Maatbeker", forbidden: ["Meten","Water","Keuken","Milliliter"] },
+  { word: "Vuilnisbak", forbidden: ["Afval","Prullen","Zak","Weggooien"] },
+  { word: "Wasmand", forbidden: ["Kleren","Wassen","Wasgoed","Mand"] },
+  { word: "Wasknijper", forbidden: ["Kleren","Waslijn","Knijpen","Droog"] },
+  { word: "Strijkplank", forbidden: ["Strijken","Kleren","Plank","Kreukels"] },
+  { word: "Dweil", forbidden: ["Vloer","Water","Schoonmaken","Emmer"] },
+  { word: "Spons", forbidden: ["Water","Schoonmaken","Afwas","Zacht"] },
+  { word: "Afwasborstel", forbidden: ["Borden","Afwassen","Zeep","Keuken"] },
+  { word: "Deurmat", forbidden: ["Deur","Voeten","Schoenen","Schoon"] },
+  { word: "Kapstok", forbidden: ["Jas","Kleding","Hangen","Hal"] },
+  { word: "Vaas", forbidden: ["Bloemen","Water","Glas","Tafel"] },
+  { word: "Bloempot", forbidden: ["Plant","Aarde","Tuin","Bloem"] },
+  { word: "Gordijn", forbidden: ["Raam","Dicht","Stof","Kamer"] },
+  { word: "Tapijt", forbidden: ["Vloer","Kamer","Stof","Lopen"] },
+  { word: "Fotolijst", forbidden: ["Foto","Muur","Glas","Kader"] },
+  { word: "Lamp", forbidden: ["Licht","Elektriciteit","Schakelaar","Kamer"] },
+  { word: "Kroonluchter", forbidden: ["Licht","Plafond","Lamp","Groot"] },
+
+  // Eten & Drinken
+  { word: "Lasagne", forbidden: ["Pasta", "Kaas", "Italië", "Oven"] },
+  { word: "Nasi", forbidden: ["Rijst", "Indonesië", "Kruiden", "Wok"] },
+  { word: "Patat", forbidden: ["Friet", "Mayonaise", "Aardappel", "Snack"] },
+  { word: "Boterham", forbidden: ["Brood", "Beleg", "Eten", "Smeren"] },
+  { word: "Broodje", forbidden: ["Bakker", "Beleg", "Brood", "Lunch"] },
+  { word: "Worst", forbidden: ["Vlees", "Rond", "Braad", "Snack"] },
+  { word: "Spek", forbidden: ["Varken", "Bacon", "Vlees", "Ontbijt"] },
+  { word: "Kipnugget", forbidden: ["Kip", "Fastfood", "Krokant", "Snack"] },
+  { word: "Hotdog", forbidden: ["Worst", "Broodje", "Mosterd", "Amerika"] },
+  { word: "Tosti", forbidden: ["Kaas", "Brood", "Ham", "Grill"] },
+  { word: "Toast", forbidden: ["Brood", "Boter", "Roosteren", "Ontbijt"] },
+  { word: "Omelet", forbidden: ["Ei", "Bakken", "Pan", "Ontbijt"] },
+  { word: "Pasta", forbidden: ["Italië", "Saus", "Spaghetti", "Koken"] },
+  { word: "Rijst", forbidden: ["Korrels", "Koken", "Azië", "Wit"] },
+  { word: "Curry", forbidden: ["Kruiden", "India", "Saus", "Pittig"] },
+  { word: "Sojasaus", forbidden: ["Azië", "Zout", "Sushi", "Donker"] },
+  { word: "Mayonaise", forbidden: ["Friet", "Wit", "Saus", "Ei"] },
+  { word: "Ketchup", forbidden: ["Tomaat", "Rood", "Saus", "Friet"] },
+  { word: "Mosterd", forbidden: ["Geel", "Saus", "Hotdog", "Pittig"] },
+  { word: "Jam", forbidden: ["Brood", "Zoet", "Fruit", "Smeren"] },
+  { word: "Honing", forbidden: ["Bij", "Zoet", "Geel", "Bijen"] },
+  { word: "Yoghurt", forbidden: ["Melk", "Ontbijt", "Zuivel", "Bakje"] },
+  { word: "Vla", forbidden: ["Toetje", "Zuivel", "Vanille", "Bakje"] },
+  { word: "Pudding", forbidden: ["Toetje", "Zoet", "Vanille", "Dessert"] },
+  { word: "Cake", forbidden: ["Bakken", "Verjaardag", "Zoet", "Taart"] },
+  { word: "Koekje", forbidden: ["Bakken", "Zoet", "Krokant", "Snoep"] },
+  { word: "Muffin", forbidden: ["Cake", "Bakken", "Blauw", "Ontbijt"] },
+  { word: "Wafel", forbidden: ["Belgisch", "Zoet", "Siroop", "Bakken"] },
+  { word: "Marshmallow", forbidden: ["Zacht", "Zoet", "Vuur", "Wit"] },
+  { word: "Pepermunt", forbidden: ["Munt", "Fris", "Snoep", "Groen"] },
+  { word: "Kauwgom", forbidden: ["Bellen", "Kauwen", "Mond", "Snoep"] },
+  { word: "Chips", forbidden: ["Zak", "Aardappel", "Zout", "Krokant"] },
+  { word: "Pretzel", forbidden: ["Zout", "Duitsland", "Knot", "Snack"] },
+  { word: "Poffertjes", forbidden: ["Klein", "Pannenkoek", "Poedersuiker", "Bakken"] },
+  { word: "Erwtensoep", forbidden: ["Erwt", "Winter", "Soep", "Worst"] },
+  { word: "Tomatensoep", forbidden: ["Tomaat", "Rood", "Kom", "Warm"] },
+  { word: "Kokosnoot", forbidden: ["Palmboom", "Tropisch", "Melk", "Hard"] },
+  { word: "Mango", forbidden: ["Fruit", "Geel", "Tropisch", "Pit"] },
+  { word: "Perzik", forbidden: ["Fruit", "Oranje", "Zacht", "Pit"] },
+  { word: "Peer", forbidden: ["Fruit", "Groen", "Boom", "Sappig"] },
+  { word: "Kers", forbidden: ["Rood", "Fruit", "Steen", "Boom"] },
+  { word: "Framboos", forbidden: ["Rood", "Fruit", "Bes", "Zacht"] },
+  { word: "Bosbes", forbidden: ["Blauw", "Fruit", "Bes", "Klein"] },
+  { word: "Kiwi", forbidden: ["Groen", "Fruit", "Bruin", "Schil"] },
+  { word: "Papaja", forbidden: ["Tropisch", "Fruit", "Oranje", "Pit"] },
+  { word: "Avocado", forbidden: ["Groen", "Pit", "Guacamole", "Fruit"] },
+  { word: "Mais", forbidden: ["Geel", "Kolf", "Popcorn", "Groente"] },
+  { word: "Spinazie", forbidden: ["Groen", "Blad", "Groente", "Popeye"] },
+  { word: "Paprika", forbidden: ["Rood", "Groen", "Groente", "Krokant"] },
+  { word: "Aardappel", forbidden: ["Friet", "Bodem", "Groente", "Koken"] },
+
+  // Dieren
+  { word: "Tijger", forbidden: ["Oranje", "Strepen", "Kat", "Jungle"] },
+  { word: "Luipaard", forbidden: ["Vlekken", "Kat", "Afrika", "Snel"] },
+  { word: "Cheeta", forbidden: ["Snel", "Kat", "Afrika", "Vlekken"] },
+  { word: "Panter", forbidden: ["Zwart", "Kat", "Jungle", "Roofier"] },
+  { word: "Neushoorn", forbidden: ["Hoorn", "Grijs", "Afrika", "Groot"] },
+  { word: "Nijlpaard", forbidden: ["Water", "Groot", "Afrika", "Grijs"] },
+  { word: "Gorilla", forbidden: ["Aap", "Groot", "Jungle", "Zwart"] },
+  { word: "Chimpansee", forbidden: ["Aap", "Slim", "Jungle", "Banaan"] },
+  { word: "Orang-oetan", forbidden: ["Aap", "Rood", "Bomen", "Azië"] },
+  { word: "Zeehond", forbidden: ["Zee", "Flippers", "Dier", "Strand"] },
+  { word: "Orka", forbidden: ["Walvis", "Zwart", "Wit", "Zee"] },
+  { word: "Zeepaardje", forbidden: ["Zee", "Paard", "Klein", "Vis"] },
+  { word: "Zeester", forbidden: ["Zee", "Vijf", "Dier", "Strand"] },
+  { word: "Octopus", forbidden: ["Acht", "Armen", "Zee", "Inkt"] },
+  { word: "Inktvis", forbidden: ["Inkt", "Zee", "Tentakels", "Vis"] },
+  { word: "Kreeft", forbidden: ["Zee", "Schaaldier", "Rood", "Schaar"] },
+  { word: "Garnaal", forbidden: ["Zee", "Roze", "Klein", "Schaaldier"] },
+  { word: "Zeekoe", forbidden: ["Water", "Koe", "Groot", "Zwemmen"] },
+  { word: "Zwaardvis", forbidden: ["Zee", "Vis", "Zwaard", "Groot"] },
+  { word: "Zalm", forbidden: ["Vis", "Roze", "Rivier", "Eten"] },
+  { word: "Forel", forbidden: ["Vis", "Rivier", "Vissen", "Water"] },
+  { word: "Karper", forbidden: ["Vis", "Vijver", "Water", "Vissen"] },
+  { word: "Goudvis", forbidden: ["Kom", "Oranje", "Vis", "Water"] },
+  { word: "Haai", forbidden: ["Tanden", "Zee", "Vin", "Gevaar"] },
+  { word: "Adelaar", forbidden: ["Vogel", "Vliegen", "Groot", "Snavel"] },
+  { word: "Arend", forbidden: ["Vogel", "Vliegen", "Vleugels", "Roofvogel"] },
+  { word: "Ooievaar", forbidden: ["Baby", "Vogel", "Nest", "Lange poten"] },
+  { word: "Pauw", forbidden: ["Staart", "Veren", "Kleuren", "Vogel"] },
+  { word: "Kraai", forbidden: ["Zwart", "Vogel", "Kraaien", "Vleugels"] },
+  { word: "Specht", forbidden: ["Boom", "Snavel", "Vogel", "Tikken"] },
+  { word: "Struisvogel", forbidden: ["Groot", "Vogel", "Afrika", "Niet vliegen"] },
+  { word: "Toekan", forbidden: ["Snavel", "Vogel", "Tropisch", "Kleuren"] },
+  { word: "Pelikan", forbidden: ["Snavel", "Vogel", "Water", "Zak"] },
+  { word: "Zwaan", forbidden: ["Wit", "Water", "Vogel", "Nek"] },
+  { word: "Eekhoorn", forbidden: ["Staart", "Noten", "Boom", "Klein"] },
+  { word: "Bever", forbidden: ["Dam", "Water", "Tanden", "Knaagdier"] },
+  { word: "Hamster", forbidden: ["Kooi", "Wiel", "Klein", "Knaagdier"] },
+  { word: "Cavia", forbidden: ["Kooi", "Knaagdier", "Haar", "Klein"] },
+  { word: "Rat", forbidden: ["Muis", "Staart", "Riool", "Knaagdier"] },
+  { word: "Vleermuis", forbidden: ["Nacht", "Grot", "Vliegen", "Zoogdier"] },
+  { word: "Mier", forbidden: ["Klein", "Insect", "Kolonie", "Suiker"] },
+  { word: "Vlinder", forbidden: ["Rups", "Vleugels", "Kleuren", "Insect"] },
+  { word: "Libelle", forbidden: ["Vleugels", "Water", "Insect", "Blauw"] },
+  { word: "Sprinkhaan", forbidden: ["Springen", "Groen", "Insect", "Gras"] },
+  { word: "Lieveheersbeestje", forbidden: ["Rood", "Stippen", "Insect", "Klein"] },
+  { word: "Wesp", forbidden: ["Geel", "Prikken", "Insect", "Zwart"] },
+  { word: "Kevers", forbidden: ["Insect", "Klein", "Potjes", "Zes"] },
+  { word: "Worm", forbidden: ["Grond", "Kruipen", "Lang", "Regen"] },
+  { word: "Mug", forbidden: ["Prikken", "Jeuk", "Insect", "Zomer"] },
+
+  // Voorwerpen
+  { word: "Laptop", forbidden: ["Computer", "Scherm", "Toetsenbord", "Draagbaar"] },
+  { word: "Tablet", forbidden: ["Scherm", "App", "Touchscreen", "Computer"] },
+  { word: "Toetsenbord", forbidden: ["Typen", "Letters", "Computer", "Toetsen"] },
+  { word: "Muis", forbidden: ["Computer", "Klikken", "Draad", "Bureau"] },
+  { word: "Koptelefoon", forbidden: ["Muziek", "Oren", "Geluid", "Luisteren"] },
+  { word: "Luidspreker", forbidden: ["Geluid", "Muziek", "Hard", "Box"] },
+  { word: "Camera", forbidden: ["Foto", "Filmen", "Lens", "Beeld"] },
+  { word: "Afstandsbediening", forbidden: ["Televisie", "Knopjes", "Zappen", "Batterij"] },
+  { word: "Lader", forbidden: ["Telefoon", "Stroom", "Kabel", "Batterij"] },
+  { word: "Kabel", forbidden: ["Stroom", "Draad", "Aansluiten", "USB"] },
+  { word: "Stekker", forbidden: ["Stopcontact", "Stroom", "Kabel", "Elektriciteit"] },
+  { word: "Stopcontact", forbidden: ["Stroom", "Stekker", "Muur", "Elektriciteit"] },
+  { word: "Rugzak", forbidden: ["Tas", "School", "Dragen", "Rits"] },
+  { word: "Portemonnee", forbidden: ["Geld", "Pas", "Zak", "Betalen"] },
+  { word: "Parfum", forbidden: ["Ruiken", "Geur", "Flesje", "Spray"] },
+  { word: "Kam", forbidden: ["Haar", "Tanden", "Borstel", "Kammen"] },
+  { word: "Shampoo", forbidden: ["Haar", "Douche", "Wassen", "Zeep"] },
+  { word: "Badjas", forbidden: ["Douche", "Bad", "Aantrekken", "Katoen"] },
+  { word: "Zakdoek", forbidden: ["Neus", "Papier", "Niezen", "Snot"] },
+  { word: "Parasol", forbidden: ["Zon", "Schaduw", "Strand", "Openklappen"] },
+  { word: "Hangmat", forbidden: ["Slapen", "Tuin", "Liggen", "Touw"] },
+  { word: "Picknickmand", forbidden: ["Eten", "Buiten", "Mand", "Dekentje"] },
+  { word: "Fles", forbidden: ["Water", "Drinken", "Dop", "Glas"] },
+  { word: "Beker", forbidden: ["Drinken", "Kopje", "Water", "Hand"] },
+  { word: "Bord", forbidden: ["Eten", "Tafel", "Rond", "Servies"] },
+  { word: "Vork", forbidden: ["Eten", "Mes", "Lepel", "Prikken"] },
+  { word: "Lepel", forbidden: ["Soep", "Eten", "Bestek", "Klein"] },
+  { word: "Mes", forbidden: ["Snijden", "Scherp", "Bestek", "Keuken"] },
+  { word: "Pan", forbidden: ["Koken", "Keuken", "Bakken", "Handvat"] },
+  { word: "Koelkast", forbidden: ["Koud", "Eten", "Keuken", "Deur"] },
+  { word: "Oven", forbidden: ["Bakken", "Heet", "Keuken", "Pizza"] },
+  { word: "Magnetron", forbidden: ["Opwarmen", "Eten", "Keuken", "Biep"] },
+  { word: "Broodrooster", forbidden: ["Brood", "Toast", "Keuken", "Warm"] },
+  { word: "Blender", forbidden: ["Mixen", "Fruit", "Keuken", "Smoothie"] },
+  { word: "Mixer", forbidden: ["Bakken", "Beslag", "Keuken", "Kloppers"] },
+  { word: "Stofdoek", forbidden: ["Schoonmaken", "Stof", "Doek", "Meubels"] },
+  { word: "Dweil", forbidden: ["Vloer", "Water", "Schoonmaken", "Emmer"] },
+  { word: "Wasmand", forbidden: ["Kleren", "Wassen", "Mand", "Badkamer"] },
+  { word: "Strijkplank", forbidden: ["Strijken", "Kleren", "Plank", "Kreukels"] },
+  { word: "Parapluutje", forbidden: ["Regen", "Nat", "Hand", "Open"] },
+  { word: "Riem", forbidden: ["Broek", "Taille", "Gesp", "Dragen"] },
+  { word: "Pet", forbidden: ["Hoofd", "Zon", "Klep", "Dragen"] },
+  { word: "Sjaal", forbidden: ["Nek", "Winter", "Warm", "Kleding"] },
+  { word: "Handschoen", forbidden: ["Hand", "Winter", "Vingers", "Warm"] },
+
+  // Personen & beroepen
+  { word: "Leraar", forbidden: ["School", "Les", "Klas", "Docent"] },
+  { word: "Student", forbidden: ["School", "Studeren", "Boek", "Universiteit"] },
+  { word: "Verpleegkundige", forbidden: ["Ziekenhuis", "Dokter", "Patiënt", "Zorg"] },
+  { word: "Timmerman", forbidden: ["Hout", "Bouwen", "Zaag", "Spijker"] },
+  { word: "Metselaar", forbidden: ["Baksteen", "Muur", "Bouwen", "Cement"] },
+  { word: "Elektricien", forbidden: ["Stroom", "Kabel", "Elektra", "Installeren"] },
+  { word: "Chauffeur", forbidden: ["Auto", "Rijden", "Bus", "Bestuurder"] },
+  { word: "Buschauffeur", forbidden: ["Bus", "Rijden", "Passagiers", "Halte"] },
+  { word: "Treinmachinist", forbidden: ["Trein", "Spoor", "Rijden", "Station"] },
+  { word: "Postbode", forbidden: ["Brief", "Post", "Brievenbus", "Bezorging"] },
+  { word: "Fotograaf", forbidden: ["Camera", "Foto", "Lens", "Filmen"] },
+  { word: "Journalist", forbidden: ["Nieuws", "Krant", "Schrijven", "Interview"] },
+  { word: "Acteur", forbidden: ["Film", "Toneel", "Spelen", "Camera"] },
+  { word: "Zanger", forbidden: ["Muziek", "Lied", "Microfoon", "Podium"] },
+  { word: "Muzikant", forbidden: ["Instrument", "Muziek", "Spelen", "Band"] },
+  { word: "Voetballer", forbidden: ["Bal", "Doelpunt", "Team", "Voetbal"] },
+  { word: "Scheidsrechter", forbidden: ["Fluit", "Wedstrijd", "Kaart", "Voetbal"] },
+  { word: "Koningin", forbidden: ["Kroon", "Koning", "Paleis", "Land"] },
+  { word: "Prins", forbidden: ["Koning", "Kroon", "Kasteel", "Koninklijk"] },
+  { word: "Superheld", forbidden: ["Kracht", "Cape", "Redden", "Held"] },
+  { word: "Detective", forbidden: ["Politie", "Mysterie", "Onderzoeken", "Vergrootglas"] },
+  { word: "Goochelaar", forbidden: ["Toveren", "Truc", "Hoed", "Magie"] },
+  { word: "Kapitein", forbidden: ["Schip", "Boot", "Stuurman", "Zee"] },
+  { word: "Matroos", forbidden: ["Schip", "Zee", "Boot", "Kapitein"] },
+  { word: "Boef", forbidden: ["Dief", "Politie", "Stelen", "Gevangenis"] },
+  { word: "Brandweerman", forbidden: ["Vuur", "Blussen", "Rood", "Kazerne"] },
+  { word: "Tovenaar", forbidden: ["Magie", "Toverstaf", "Spreuk", "Hoed"] },
+  { word: "Prinses", forbidden: ["Kroon", "Jurk", "Kasteel", "Koninklijk"] },
+
+  // Locaties & natuur
+  { word: "Bibliotheek", forbidden: ["Boeken", "Lezen", "Stil", "Lenen"] },
+  { word: "Pretpark", forbidden: ["Attractie", "Achtbaan", "Kermis", "Plezier"] },
+  { word: "Speeltuin", forbidden: ["Kinderen", "Schommel", "Glijbaan", "Spelen"] },
+  { word: "Sporthal", forbidden: ["Sport", "Zaal", "Basketbal", "Gym"] },
+  { word: "Stadion", forbidden: ["Voetbal", "Tribune", "Wedstrijd", "Publiek"] },
+  { word: "Zwembad", forbidden: ["Water", "Zwemmen", "Chloor", "Duiken"] },
+  { word: "Camping", forbidden: ["Tent", "Vakantie", "Kamperen", "Caravan"] },
+  { word: "Hotel", forbidden: ["Slapen", "Kamer", "Vakantie", "Bed"] },
+  { word: "Restaurant", forbidden: ["Eten", "Menu", "Kok", "Tafel"] },
+  { word: "Bakkerij", forbidden: ["Brood", "Bakker", "Oven", "Koek"] },
+  { word: "Dierenwinkel", forbidden: ["Dieren", "Kopen", "Voer", "Huisdier"] },
+  { word: "Boerderij", forbidden: ["Koe", "Tractor", "Boer", "Dieren"] },
+  { word: "Pretpark", forbidden: ["Attracties", "Achtbaan", "Pret", "Kaartje"] },
+  { word: "Waterslide", forbidden: ["Water", "Glijden", "Zwembad", "Pret"] },
+  { word: "Rivier", forbidden: ["Water", "Stroom", "Brug", "Boot"] },
+  { word: "Meer", forbidden: ["Water", "Zwemmen", "Boot", "Oever"] },
+  { word: "Vijver", forbidden: ["Water", "Kikker", "Eend", "Tuin"] },
+  { word: "Heide", forbidden: ["Paars", "Natuur", "Planten", "Wandelen"] },
+  { word: "Jungle", forbidden: ["Bomen", "Aap", "Tropisch", "Groen"] },
+  { word: "Savanne", forbidden: ["Afrika", "Gras", "Leeuw", "Warm"] },
+  { word: "Gletsjer", forbidden: ["IJs", "Koud", "Berg", "Sneeuw"] },
+  { word: "Noordpool", forbidden: ["IJs", "Koud", "Pool", "IJsbeer"] },
+  { word: "Waterslot", forbidden: ["Water", "Sluis", "Rivier", "Deur"] },
+  { word: "Dorp", forbidden: ["Huis", "Klein", "Straat", "Stad"] },
+  { word: "Stad", forbidden: ["Gebouwen", "Verkeer", "Mensen", "Dorp"] },
+  { word: "Winkel", forbidden: ["Kopen", "Geld", "Producten", "Kassa"] },
+  { word: "Apotheek", forbidden: ["Medicijnen", "Dokter", "Pillen", "Gezondheid"] },
+  { word: "Kerk", forbidden: ["Klokken", "Gebouw", "Zondag", "Banken"] },
+  { word: "Moskee", forbidden: ["Gebed", "Gebouw", "Koepel", "Religie"] },
+  { word: "Bibliotheekzaal", forbidden: ["Boeken", "Lezen", "Stil", "Kasten"] },
+  { word: "Watertoren", forbidden: ["Water", "Toren", "Hoog", "Reservoir"] },
+  { word: "Vuurtoren", forbidden: ["Zee", "Licht", "Kust", "Toren"] },
+  { word: "Tunnel", forbidden: ["Ondergronds", "Donker", "Trein", "Weg"] },
+
+  // Activiteiten
+  { word: "Springen", forbidden: ["Hoog", "Benen", "Lucht", "Sport"] },
+  { word: "Kruipen", forbidden: ["Baby", "Grond", "Handen", "Knieën"] },
+  { word: "Rennen", forbidden: ["Hardlopen", "Snel", "Benen", "Sport"] },
+  { word: "Wandelen", forbidden: ["Lopen", "Buiten", "Natuur", "Voeten"] },
+  { word: "Fietsen", forbidden: ["Fiets", "Trappen", "Wielen", "Buiten"] },
+  { word: "Zwemmen", forbidden: ["Water", "Bad", "Sport", "Duiken"] },
+  { word: "Duiken", forbidden: ["Water", "Onderwater", "Zwemmen", "Diep"] },
+  { word: "Skiën", forbidden: ["Sneeuw", "Berg", "Winter", "Liften"] },
+  { word: "Surfen", forbidden: ["Golf", "Plank", "Zee", "Water"] },
+  { word: "Skateboarden", forbidden: ["Plank", "Wielen", "Truc", "Skatepark"] },
+  { word: "Koken", forbidden: ["Keuken", "Eten", "Pan", "Recept"] },
+  { word: "Bakken", forbidden: ["Oven", "Taart", "Meel", "Keuken"] },
+  { word: "Lezen", forbidden: ["Boek", "Letters", "Verhaal", "Bladzijde"] },
+  { word: "Schrijven", forbidden: ["Pen", "Papier", "Letters", "Tekst"] },
+  { word: "Tekenen", forbidden: ["Potlood", "Papier", "Tekening", "Kunst"] },
+  { word: "Knippen", forbidden: ["Schaar", "Papier", "Knippen", "Haar"] },
+  { word: "Verven", forbidden: ["Verf", "Kwast", "Muur", "Kleur"] },
+  { word: "Fotograferen", forbidden: ["Camera", "Foto", "Lens", "Beeld"] },
+  { word: "Kamperen", forbidden: ["Tent", "Buiten", "Vakantie", "Slaapzak"] },
+  { word: "Vissen", forbidden: ["Hengel", "Vis", "Water", "Aas"] },
+  { word: "Tuinieren", forbidden: ["Tuin", "Planten", "Bloemen", "Grond"] },
+  { word: "Boodschappen doen", forbidden: ["Supermarkt", "Winkel", "Kopen", "Karretje"] },
+  { word: "Stofzuigen", forbidden: ["Stofzuiger", "Vloer", "Schoonmaken", "Zuigen"] },
+  { word: "Afwassen", forbidden: ["Borden", "Water", "Zeep", "Keuken"] },
+  { word: "Slapen", forbidden: ["Bed", "Nacht", "Kussen", "Dromen"] },
+  { word: "Gapen", forbidden: ["Moe", "Mond", "Slapen", "Slaap"] },
+  { word: "Fluiten", forbidden: ["Mond", "Geluid", "Lied", "Vogel"] },
+  { word: "Klappen", forbidden: ["Handen", "Applaus", "Geluid", "Publiek"] },
+  { word: "Schreeuwen", forbidden: ["Hard", "Stem", "Geluid", "Boos"] },
+  { word: "Praten", forbidden: ["Stem", "Woorden", "Zeggen", "Mond"] },
+  { word: "Luisteren", forbidden: ["Oren", "Horen", "Geluid", "Muziek"] },
+
+  // Entertainment & fictie
+  { word: "Super Mario", forbidden: ["Nintendo", "Pet", "Snor", "Paddenstoel"] },
+  { word: "Luigi", forbidden: ["Mario", "Groen", "Nintendo", "Broer"] },
+  { word: "Sonic", forbidden: ["Blauw", "Snel", "Egel", "Spel"] },
+  { word: "Pikachu", forbidden: ["Geel", "Pokémon", "Elektrisch", "Staart"] },
+  { word: "Hulk", forbidden: ["Groen", "Sterk", "Marvel", "Bruce"] },
+  { word: "Iron Man", forbidden: ["Rood", "Pak", "Marvel", "Tony"] },
+  { word: "Superman", forbidden: ["Cape", "Vliegen", "Blauw", "Held"] },
+  { word: "Wonder Woman", forbidden: ["Held", "Lasso", "DC", "Vrouw"] },
+  { word: "Joker", forbidden: ["Batman", "Clown", "Grappig", "Schurk"] },
+  { word: "Donald Duck", forbidden: ["Eend", "Disney", "Donald", "Kwaken"] },
+  { word: "Mickey Mouse", forbidden: ["Disney", "Oren", "Muis", "Rood"] },
+  { word: "SpongeBob", forbidden: ["Geel", "Vierkant", "Zee", "Patrick"] },
+  { word: "Tom", forbidden: ["Jerry", "Kat", "Cartoon", "Muis"] },
+  { word: "Jerry", forbidden: ["Tom", "Muis", "Kaas", "Cartoon"] },
+  { word: "Minion", forbidden: ["Geel", "Bril", "Banana", "Film"] },
+  { word: "Dora", forbidden: ["Aap", "Rugzak", "Kaart", "Kinderprogramma"] },
+  { word: "Winnie de Poeh", forbidden: ["Beer", "Honing", "Disney", "Bos"] },
+  { word: "Kung Fu Panda", forbidden: ["Panda", "Po", "Vechtkunst", "Film"] },
+  { word: "Toy Story", forbidden: ["Speelgoed", "Woody", "Buzz", "Film"] },
+  { word: "Jurassic Park", forbidden: ["Dinosaurussen", "Film", "Park", "T-Rex"] },
+  { word: "Star Wars", forbidden: ["Ruimte", "Lichtzwaard", "Jedi", "Film"] },
+  { word: "Star Trek", forbidden: ["Ruimte", "Schip", "Kapitein", "Serie"] },
+  { word: "The Lion King", forbidden: ["Leeuw", "Simba", "Disney", "Afrika"] },
+  { word: "Aladdin", forbidden: ["Lamp", "Geest", "Jasmine", "Disney"] },
+  { word: "Assepoester", forbidden: ["Schoen", "Prins", "Pompoen", "Disney"] },
+  { word: "Rapunzel", forbidden: ["Haar", "Toren", "Prinses", "Disney"] },
+  { word: "Peter Pan", forbidden: ["Vliegen", "Nooit", "Kapitein Haak", "Disney"] },
+  { word: "Sneeuwwitje", forbidden: ["Appel", "Dwergen", "Spiegel", "Prinses"] },
+  { word: "Pinokkio", forbidden: ["Neus", "Hout", "Leugen", "Pop"] },
+  { word: "De Smurfen", forbidden: ["Blauw", "Kabouter", "Dorp", "Gargamel"] },
+  { word: "Asterix", forbidden: ["Obelix", "Romeinen", "Gallië", "Strip"] },
+  { word: "Obelix", forbidden: ["Asterix", "Dik", "Menhir", "Romeinen"] },
+  { word: "Suske en Wiske", forbidden: ["Strip", "Lambik", "Wiske", "Vlaanderen"] },
+  { word: "Donald Duck", forbidden: ["Eend", "Disney", "Strip", "Oom"] },
+  { word: "Kuifje", forbidden: ["Hond", "Strip", "Reporter", "België"] },
+
+  // Sport
+  { word: "Voetbal", forbidden: ["Bal", "Doelpunt", "Team", "Sport"] },
+  { word: "Basketbal", forbidden: ["Hoepel", "Bal", "Sport", "Dribbelen"] },
+  { word: "Tennis", forbidden: ["Racket", "Bal", "Net", "Sport"] },
+  { word: "Hockey", forbidden: ["Stick", "Bal", "Veld", "Sport"] },
+  { word: "Volleybal", forbidden: ["Net", "Bal", "Team", "Sport"] },
+  { word: "Handbal", forbidden: ["Bal", "Handen", "Doel", "Sport"] },
+  { word: "Badminton", forbidden: ["Racket", "Shuttle", "Net", "Sport"] },
+  { word: "Golf", forbidden: ["Club", "Bal", "Hole", "Sport"] },
+  { word: "Boksen", forbidden: ["Handschoenen", "Ring", "Slaan", "Sport"] },
+  { word: "Turnen", forbidden: ["Gym", "Mat", "Sport", "Oefening"] },
+  { word: "Atletiek", forbidden: ["Rennen", "Sport", "Baan", "Wedstrijd"] },
+  { word: "Marathon", forbidden: ["Hardlopen", "Kilometers", "Wedstrijd", "Rennen"] },
+  { word: "Paardrijden", forbidden: ["Paard", "Zadel", "Rijden", "Sport"] },
+  { word: "Kanoën", forbidden: ["Boot", "Water", "Peddel", "Rivier"] },
+  { word: "Roeien", forbidden: ["Boot", "Water", "Peddel", "Sport"] },
+  { word: "Zeilen", forbidden: ["Boot", "Wind", "Water", "Zeil"] },
+  { word: "Klimmen", forbidden: ["Berg", "Hoog", "Touw", "Sport"] },
+  { word: "Ballet", forbidden: ["Dans", "Spitzen", "Muziek", "Theater"] },
+  { word: "Dansen", forbidden: ["Muziek", "Bewegen", "Voeten", "Feest"] },
+
+  // Random / grappig
+  { word: "Regenjas", forbidden: ["Regen", "Nat", "Jas", "Water"] },
+  { word: "Slaapzak", forbidden: ["Slapen", "Tent", "Kamperen", "Deken"] },
+  { word: "Wekker", forbidden: ["Slapen", "Tijd", "Ochtend", "Alarm"] },
+  { word: "Kalender", forbidden: ["Datum", "Maand", "Jaar", "Dag"] },
+  { word: "Agenda", forbidden: ["Afspraken", "Datum", "School", "Planning"] },
+  { word: "Potlood", forbidden: ["Schrijven", "Gum", "Hout", "Tekenen"] },
+  { word: "Gum", forbidden: ["Potlood", "Wissen", "Papier", "Tekening"] },
+  { word: "Pen", forbidden: ["Schrijven", "Inkt", "Papier", "Blauw"] },
+  { word: "Liniaal", forbidden: ["Meten", "Centimeter", "Recht", "School"] },
+  { word: "Boekenplank", forbidden: ["Boeken", "Kast", "Lezen", "Hout"] },
+  { word: "Kast", forbidden: ["Deur", "Opbergen", "Meubel", "Kleding"] },
+  { word: "Lade", forbidden: ["Kast", "Opbergen", "Openen", "Meubel"] },
+  { word: "Deurbel", forbidden: ["Deur", "Drukken", "Geluid", "Bezoek"] },
+  { word: "Brievenbus", forbidden: ["Post", "Brief", "Rood", "Straat"] },
+  { word: "Sleutelbos", forbidden: ["Sleutels", "Deur", "Slot", "Metaal"] },
+  { word: "Ketting", forbidden: ["Hals", "Sieraad", "Goud", "Dragen"] },
+  { word: "Armband", forbidden: ["Pols", "Sieraad", "Dragen", "Hand"] },
+  { word: "Oorbellen", forbidden: ["Oor", "Sieraad", "Dragen", "Goud"] },
+  { word: "Rugby", forbidden: ["Bal", "Sport", "Team", "Veld"] },
+  { word: "Kampvuur", forbidden: ["Vuur", "Hout", "Buiten", "Warm"] },
+  { word: "Zaklamp", forbidden: ["Licht", "Donker", "Batterij", "Schijnen"] },
+  { word: "Verrekijker", forbidden: ["Kijken", "Ver", "Ogen", "Vergroten"] },
+  { word: "Telescoop", forbidden: ["Sterren", "Ruimte", "Kijken", "Maan"] },
+  { word: "Kompas", forbidden: ["Noord", "Richting", "Reizen", "Naald"] },
+  { word: "Kaart", forbidden: ["Route", "Land", "Navigatie", "Papier"] },
+  { word: "Wereldbol", forbidden: ["Aarde", "Kaart", "Landen", "Rond"] },
+  { word: "Kluis", forbidden: ["Geld", "Slot", "Code", "Veilig"] },
+  { word: "Schatkist", forbidden: ["Piraat", "Goud", "Schat", "Kist"] },
+  { word: "Schatkaart", forbidden: ["Piraat", "Schat", "Kaart", "X"] },
+  { word: "Vergrootglas", forbidden: ["Kijken", "Groot", "Glas", "Detective"] },
+  { word: "Verkeerslicht", forbidden: ["Rood", "Groen", "Auto", "Stoppen"] },
+  { word: "Stopbord", forbidden: ["Rood", "Auto", "Verkeer", "Stoppen"] },
+  { word: "Zebrapad", forbidden: ["Straat", "Wit", "Zwart", "Oversteken"] },
+  { word: "Verkeersbord", forbidden: ["Weg", "Auto", "Verkeer", "Regel"] },
+  { word: "Fietspad", forbidden: ["Fiets", "Weg", "Auto", "Verkeer"] },
+  { word: "Roltrap", forbidden: ["Trap", "Winkel", "Bewegen", "Omhoog"] },
+  { word: "Lift", forbidden: ["Gebouw", "Omhoog", "Knop", "Verdieping"] },
+  { word: "Trap", forbidden: ["Lopen", "Treden", "Omhoog", "Huis"] },
+  { word: "Dak", forbidden: ["Huis", "Boven", "Pannen", "Regen"] },
+  { word: "Sleutelgat", forbidden: ["Sleutel", "Deur", "Slot", "Openen"] },
+
+  // Eten & Drinken
+  { word: "Pasta", forbidden: ["Italië", "Saus", "Spaghetti", "Koken"] },
+  { word: "Lasagne", forbidden: ["Pasta", "Kaas", "Oven", "Italië"] },
+  { word: "Hamburger", forbidden: ["Broodje", "Vlees", "Burger", "Fastfood"] },
+  { word: "Hotdog", forbidden: ["Worst", "Broodje", "Mosterd", "Ketchup"] },
+  { word: "Poffertje", forbidden: ["Klein", "Suiker", "Pannenkoek", "Nederland"] },
+  { word: "Wafel", forbidden: ["Brussel", "Zoet", "IJzer", "Ontbijt"] },
+  { word: "Cake", forbidden: ["Bakken", "Taart", "Zoet", "Oven"] },
+  { word: "Koekje", forbidden: ["Bakken", "Chocolade", "Zoet", "Knapperig"] },
+  { word: "Chips", forbidden: ["Zak", "Zout", "Aardappel", "Snack"] },
+  { word: "Snoep", forbidden: ["Zoet", "Suiker", "Winkel", "Kinderen"] },
+  { word: "Kauwgom", forbidden: ["Kauwen", "Bellen", "Mond", "Plakken"] },
+  { word: "Marshmallow", forbidden: ["Zacht", "Wit", "Zoet", "Vuur"] },
+  { word: "Honing", forbidden: ["Bij", "Zoet", "Geel", "Pot"] },
+  { word: "Jam", forbidden: ["Brood", "Fruit", "Smeren", "Zoet"] },
+  { word: "Pindakaas", forbidden: ["Pinda", "Brood", "Smeren", "Pot"] },
+  { word: "Mayonaise", forbidden: ["Friet", "Saus", "Ei", "Wit"] },
+  { word: "Ketchup", forbidden: ["Tomaat", "Rood", "Saus", "Friet"] },
+  { word: "Mosterd", forbidden: ["Geel", "Saus", "Hotdog", "Pittig"] },
+  { word: "Yoghurt", forbidden: ["Melk", "Zuivel", "Ontbijt", "Bakje"] },
+  { word: "Vla", forbidden: ["Toetje", "Zuivel", "Vanille", "Bakje"] },
+  { word: "Pudding", forbidden: ["Toetje", "Zacht", "Vanille", "Eten"] },
+  { word: "Waterijsje", forbidden: ["Koud", "Zomer", "Smelten", "IJs"] },
+  { word: "Milkshake", forbidden: ["Drinken", "Rietje", "IJs", "Blender"] },
+  { word: "Limonade", forbidden: ["Drinken", "Zoet", "Citroen", "Glas"] },
+  { word: "Frisdrank", forbidden: ["Cola", "Blikje", "Drinken", "Bubbels"] },
+  { word: "Chocolademelk", forbidden: ["Melk", "Chocolade", "Warm", "Drinken"] },
+  { word: "Sinaasappel", forbidden: ["Oranje", "Fruit", "Sap", "Schil"] },
+  { word: "Perzik", forbidden: ["Fruit", "Oranje", "Zacht", "Pit"] },
+  { word: "Peer", forbidden: ["Fruit", "Groen", "Boom", "Sap"] },
+  { word: "Mango", forbidden: ["Fruit", "Geel", "Tropisch", "Pit"] },
+  { word: "Kiwi", forbidden: ["Groen", "Fruit", "Bruin", "Harig"] },
+  { word: "Kokosnoot", forbidden: ["Palm", "Tropisch", "Bruin", "Melk"] },
+  { word: "Mais", forbidden: ["Geel", "Kolf", "Popcorn", "Groente"] },
+  { word: "Erwt", forbidden: ["Groen", "Klein", "Groente", "Peul"] },
+  { word: "Aardappel", forbidden: ["Friet", "Knol", "Frituren", "Boer"] },
+  { word: "Paprika", forbidden: ["Rood", "Groente", "Groen", "Geel"] },
+  { word: "Broccoli", forbidden: ["Groen", "Groente", "Boom", "Gezond"] },
+  { word: "Spinazie", forbidden: ["Groen", "Groente", "Popeye", "Blad"] },
+  { word: "Knoflook", forbidden: ["Wit", "Keuken", "Ruiken", "Teentje"] },
+  { word: "Champignon", forbidden: ["Paddenstoel", "Koken", "Wit", "Bos"] },
+  { word: "Olijf", forbidden: ["Groen", "Zwart", "Boom", "Italië"] },
+  { word: "Avocado", forbidden: ["Groen", "Pit", "Toast", "Fruit"] },
+  { word: "Kersen", forbidden: ["Rood", "Fruit", "Boom", "Pit"] },
+
+  // Dieren
+  { word: "Tijger", forbidden: ["Oranje", "Strepen", "Kat", "Jungle"] },
+  { word: "Luipaard", forbidden: ["Vlekken", "Kat", "Afrika", "Snel"] },
+  { word: "Jachtluipaard", forbidden: ["Snel", "Vlekken", "Afrika", "Kat"] },
+  { word: "Gorilla", forbidden: ["Aap", "Groot", "Jungle", "Sterk"] },
+  { word: "Chimpansee", forbidden: ["Aap", "Jungle", "Slim", "Banaan"] },
+  { word: "Neushoorn", forbidden: ["Hoorn", "Groot", "Afrika", "Grijs"] },
+  { word: "Nijlpaard", forbidden: ["Water", "Groot", "Afrika", "Dik"] },
+  { word: "Zeehond", forbidden: ["Zee", "Flippers", "Vis", "Dier"] },
+  { word: "Orka", forbidden: ["Walvis", "Zee", "Zwart", "Wit"] },
+  { word: "Zwaardvis", forbidden: ["Vis", "Zwaard", "Zee", "Vin"] },
+  { word: "Octopus", forbidden: ["Acht", "Armen", "Zee", "Inkt"] },
+  { word: "Zeester", forbidden: ["Zee", "Vijf", "Armen", "Dier"] },
+  { word: "Zeepaardje", forbidden: ["Zee", "Paard", "Klein", "Vis"] },
+  { word: "Schildpad", forbidden: ["Schild", "Traag", "Kop", "Dier"] },
+  { word: "Hagedis", forbidden: ["Reptiel", "Staart", "Schubben", "Kruipen"] },
+  { word: "Kameleon", forbidden: ["Kleur", "Veranderen", "Tong", "Reptiel"] },
+  { word: "Iguana", forbidden: ["Hagedis", "Groen", "Reptiel", "Staart"] },
+  { word: "Kever", forbidden: ["Insect", "Zes", "Poten", "Hard"] },
+  { word: "Lieveheersbeestje", forbidden: ["Rood", "Stippen", "Insect", "Klein"] },
+  { word: "Sprinkhaan", forbidden: ["Springen", "Groen", "Insect", "Poten"] },
+  { word: "Libelle", forbidden: ["Vleugels", "Water", "Insect", "Vliegen"] },
+  { word: "Wesp", forbidden: ["Geel", "Prikken", "Insect", "Nest"] },
+  { word: "Hommel", forbidden: ["Bij", "Geel", "Zwart", "Harig"] },
+  { word: "Miereneter", forbidden: ["Mier", "Tong", "Dier", "Eten"] },
+  { word: "Schorpioen", forbidden: ["Staart", "Gif", "Woestijn", "Steek"] },
+  { word: "Tarentula", forbidden: ["Spin", "Groot", "Harig", "Acht"] },
+  { word: "Zwaan", forbidden: ["Wit", "Water", "Vogel", "Nek"] },
+  { word: "Ooievaar", forbidden: ["Baby", "Vogel", "Nest", "Poot"] },
+  { word: "Specht", forbidden: ["Boom", "Vogel", "Snavel", "Tikken"] },
+  { word: "Meeuw", forbidden: ["Strand", "Vogel", "Zee", "Friet"] },
+  { word: "Pelikaan", forbidden: ["Snavel", "Vogel", "Water", "Vis"] },
+  { word: "Struisvogel", forbidden: ["Groot", "Vogel", "Lopen", "Afrika"] },
+  { word: "Kalkoen", forbidden: ["Kerst", "Vogel", "Feest", "Boerderij"] },
+  { word: "Ezel", forbidden: ["Paard", "Boerderij", "Balken", "Langoren"] },
+  { word: "Geit", forbidden: ["Baard", "Melk", "Berg", "Boerderij"] },
+  { word: "Schaap", forbidden: ["Wol", "Boerderij", "Blaten", "Wit"] },
+  { word: "Vleeskal", forbidden: ["Koe", "Boerderij", "Jong", "Melk"] },
+  { word: "Hamster", forbidden: ["Kooi", "Klein", "Wiel", "Knaagdier"] },
+  { word: "Cavia", forbidden: ["Kooi", "Knaagdier", "Klein", "Huisdier"] },
+  { word: "Rat", forbidden: ["Muis", "Staart", "Riool", "Knaagdier"] },
+  { word: "Vlieg", forbidden: ["Insect", "Zoemen", "Zes", "Poten"] },
+  { word: "Worm", forbidden: ["Grond", "Kruipen", "Lang", "Dier"] },
+
+  // Voorwerpen
+  { word: "Laptop", forbidden: ["Computer", "Scherm", "Toetsenbord", "Draagbaar"] },
+  { word: "Muis", forbidden: ["Computer", "Klikken", "USB", "Toetsenbord"] },
+  { word: "Toetsenbord", forbidden: ["Computer", "Typen", "Toetsen", "Letters"] },
+  { word: "Koptelefoon", forbidden: ["Muziek", "Oren", "Geluid", "Luisteren"] },
+  { word: "Luidspreker", forbidden: ["Geluid", "Muziek", "Hard", "Box"] },
+  { word: "Afstandsbediening", forbidden: ["Televisie", "Knopjes", "Zappen", "Batterij"] },
+  { word: "Oplader", forbidden: ["Telefoon", "Stroom", "Kabel", "Batterij"] },
+  { word: "USB-stick", forbidden: ["Computer", "Bestanden", "Opslag", "USB"] },
+  { word: "Camera", forbidden: ["Foto", "Filmen", "Lens", "Beeld"] },
+  { word: "Foto", forbidden: ["Camera", "Beeld", "Herinnering", "Maken"] },
+  { word: "Printer", forbidden: ["Papier", "Afdrukken", "Computer", "Inkt"] },
+  { word: "Potlood", forbidden: ["Schrijven", "Gum", "Hout", "Grijs"] },
+  { word: "Pen", forbidden: ["Schrijven", "Inkt", "Papier", "Blauw"] },
+  { word: "Gum", forbidden: ["Potlood", "Wissen", "School", "Rubber"] },
+  { word: "Liniaal", forbidden: ["Meten", "Centimeter", "School", "Recht"] },
+  { word: "Schrift", forbidden: ["Papier", "Schrijven", "School", "Bladzijden"] },
+  { word: "Boekentas", forbidden: ["School", "Dragen", "Boeken", "Tas"] },
+  { word: "Parasol", forbidden: ["Zon", "Schaduw", "Buiten", "Strand"] },
+  { word: "Zakdoek", forbidden: ["Neus", "Papier", "Snot", "Weggooien"] },
+  { word: "Kampeerstoel", forbidden: ["Zitten", "Camping", "Buiten", "Opklappen"] },
+  { word: "Slaapzak", forbidden: ["Slapen", "Camping", "Warm", "Tent"] },
+  { word: "Kofferbak", forbidden: ["Auto", "Bagage", "Achterkant", "Openen"] },
+  { word: "Fietspomp", forbidden: ["Fiets", "Band", "Lucht", "Oppompen"] },
+  { word: "Skateboard", forbidden: ["Wielen", "Rijden", "Plank", "Truc"] },
+  { word: "Step", forbidden: ["Rijden", "Wielen", "Sturen", "Voet"] },
+  { word: "Sleutelbos", forbidden: ["Sleutels", "Deur", "Slot", "Ring"] },
+  { word: "Parfum", forbidden: ["Ruiken", "Flesje", "Geur", "Spray"] },
+  { word: "Kam", forbidden: ["Haar", "Tanden", "Borstel", "Kammen"] },
+  { word: "Shampoo", forbidden: ["Haar", "Douche", "Wassen", "Zeep"] },
+  { word: "Douche", forbidden: ["Water", "Wassen", "Badkamer", "Zeep"] },
+  { word: "Bad", forbidden: ["Water", "Wassen", "Badkamer", "Liggen"] },
+  { word: "Toilet", forbidden: ["WC", "Badkamer", "Zitten", "Spoelen"] },
+  { word: "Koelkast", forbidden: ["Koud", "Eten", "Keuken", "Deur"] },
+  { word: "Oven", forbidden: ["Bakken", "Warm", "Keuken", "Pizza"] },
+  { word: "Magnetron", forbidden: ["Warm", "Eten", "Keuken", "Draaien"] },
+  { word: "Broodrooster", forbidden: ["Brood", "Toast", "Warm", "Keuken"] },
+  { word: "Waterkoker", forbidden: ["Water", "Thee", "Koken", "Warm"] },
+  { word: "Koekenpan", forbidden: ["Bakken", "Keuken", "Olie", "Pan"] },
+  { word: "Vork", forbidden: ["Eten", "Prikken", "Lepel", "Tafel"] },
+  { word: "Mes", forbidden: ["Snijden", "Scherp", "Keuken", "Vork"] },
+  { word: "Bord", forbidden: ["Eten", "Tafel", "Servies", "Rond"] },
+  { word: "Glas", forbidden: ["Drinken", "Water", "Doorzichtig", "Beker"] },
+  { word: "Fles", forbidden: ["Water", "Drinken", "Dop", "Plastic"] },
+  { word: "Parapluutje", forbidden: ["Regen", "Klein", "Water", "Openen"] },
+  { word: "Koffer", forbidden: ["Reizen", "Vakantie", "Bagage", "Wielen"] },
+
+  // Personen & beroepen
+  { word: "Leraar", forbidden: ["School", "Les", "Klas", "Docent"] },
+  { word: "Leerling", forbidden: ["School", "Leren", "Klas", "Kind"] },
+  { word: "Directeur", forbidden: ["School", "Ba(a)s", "Kantoor", "Leider"] },
+  { word: "Timmerman", forbidden: ["Hout", "Bouwen", "Spijker", "Gereedschap"] },
+  { word: "Metselaar", forbidden: ["Baksteen", "Muur", "Bouwen", "Cement"] },
+  { word: "Elektricien", forbidden: ["Stroom", "Kabel", "Licht", "Techniek"] },
+  { word: "Chauffeur", forbidden: ["Auto", "Rijden", "Bus", "Weg"] },
+  { word: "Postbode", forbidden: ["Brief", "Post", "Brievenbus", "Bezorging"] },
+  { word: "Kassamedewerker", forbidden: ["Winkel", "Kassa", "Geld", "Scanner"] },
+  { word: "Verkoper", forbidden: ["Winkel", "Kopen", "Klanten", "Product"] },
+  { word: "Fotograaf", forbidden: ["Camera", "Foto", "Lens", "Maken"] },
+  { word: "Journalist", forbidden: ["Nieuws", "Krant", "Interview", "Schrijven"] },
+  { word: "Acteur", forbidden: ["Film", "Toneel", "Spelen", "Rollen"] },
+  { word: "Regisseur", forbidden: ["Film", "Camera", "Opnemen", "Baas"] },
+  { word: "Muzikant", forbidden: ["Muziek", "Instrument", "Spelen", "Band"] },
+  { word: "Zanger", forbidden: ["Zingen", "Microfoon", "Muziek", "Stem"] },
+  { word: "Dansleraar", forbidden: ["Dansen", "Muziek", "Les", "Bewegen"] },
+  { word: "Voetballer", forbidden: ["Voetbal", "Bal", "Doel", "Sport"] },
+  { word: "Scheidsrechter", forbidden: ["Fluit", "Voetbal", "Kaart", "Wedstrijd"] },
+  { word: "Trainer", forbidden: ["Sport", "Oefenen", "Team", "Coach"] },
+  { word: "Wetenschapper", forbidden: ["Onderzoek", "Laboratorium", "Proef", "Wetenschap"] },
+  { word: "Uitvinder", forbidden: ["Bedenken", "Uitvinden", "Apparaat", "Slim"] },
+  { word: "Astronoom", forbidden: ["Sterren", "Ruimte", "Telescoop", "Planeet"] },
+  { word: "Archeoloog", forbidden: ["Opgraven", "Oud", "Botten", "Geschiedenis"] },
+  { word: "Kokkin", forbidden: ["Keuken", "Eten", "Koken", "Restaurant"] },
+  { word: "Ober", forbidden: ["Restaurant", "Bestellen", "Eten", "Tafel"] },
+  { word: "Rechter", forbidden: ["Rechtbank", "Wet", "Oordeel", "Recht"] },
+  { word: "Advocaat", forbidden: ["Rechtbank", "Wet", "Cliënt", "Juridisch"] },
+  { word: "Tandartsassistent", forbidden: ["Tandarts", "Tanden", "Patiënt", "Praktijk"] },
+  { word: "Verpleegkundige", forbidden: ["Ziekenhuis", "Dokter", "Patiënt", "Zorg"] },
+  { word: "Brandweerman", forbidden: ["Brand", "Water", "Rood", "Helm"] },
+  { word: "Politieagent", forbidden: ["Politie", "Arrestatie", "Sirene", "Uniform"] },
+
+  // Acties
+  { word: "Springen", forbidden: ["Hoog", "Lucht", "Benen", "Op"] },
+  { word: "Rennen", forbidden: ["Hardlopen", "Snel", "Benen", "Wedstrijd"] },
+  { word: "Kruipen", forbidden: ["Grond", "Baby", "Vier", "Langzaam"] },
+  { word: "Zitten", forbidden: ["Stoel", "Benen", "Staan", "Meubel"] },
+  { word: "Staan", forbidden: ["Benen", "Rechtop", "Zitten", "Voeten"] },
+  { word: "Lopen", forbidden: ["Voeten", "Benen", "Wandelen", "Gaan"] },
+  { word: "Zwaaien", forbidden: ["Hand", "Hallo", "Bewegen", "Afscheid"] },
+  { word: "Klappen", forbidden: ["Handen", "Applaus", "Geluid", "Slaan"] },
+  { word: "Fluiten", forbidden: ["Mond", "Geluid", "Lucht", "Lied"] },
+  { word: "Roepen", forbidden: ["Hard", "Stem", "Zeggen", "Geluid"] },
+  { word: "Praten", forbidden: ["Stem", "Woorden", "Mond", "Gesprek"] },
+  { word: "Luisteren", forbidden: ["Oren", "Horen", "Geluid", "Muziek"] },
+  { word: "Kijken", forbidden: ["Ogen", "Zien", "Film", "Scherm"] },
+  { word: "Lezen", forbidden: ["Boek", "Letters", "Ogen", "Verhaal"] },
+  { word: "Schrijven", forbidden: ["Pen", "Papier", "Letters", "Tekst"] },
+  { word: "Tekenen", forbidden: ["Potlood", "Papier", "Tekening", "Kunst"] },
+  { word: "Knippen", forbidden: ["Schaar", "Papier", "Snijden", "Kort"] },
+  { word: "Plakken", forbidden: ["Lijm", "Papier", "Vast", "Sticker"] },
+  { word: "Bakken", forbidden: ["Oven", "Taart", "Koken", "Deeg"] },
+  { word: "Koken", forbidden: ["Keuken", "Pan", "Eten", "Water"] },
+  { word: "Eten", forbidden: ["Mond", "Honger", "Voedsel", "Kauwen"] },
+  { word: "Drinken", forbidden: ["Water", "Glas", "Mond", "Dorst"] },
+  { word: "Slapen", forbidden: ["Bed", "Nacht", "Ogen", "Droom"] },
+  { word: "Dromen", forbidden: ["Slapen", "Nacht", "Fantasie", "Droom"] },
+  { word: "Wassen", forbidden: ["Water", "Zeep", "Schoon", "Douche"] },
+  { word: "Poetsen", forbidden: ["Tanden", "Borstel", "Schoon", "Mond"] },
+  { word: "Vegen", forbidden: ["Bezem", "Vloer", "Stof", "Schoonmaken"] },
+  { word: "Stofzuigen", forbidden: ["Stofzuiger", "Vloer", "Zuigen", "Schoon"] },
+  { word: "Bouwen", forbidden: ["Maken", "Blokken", "Huis", "Bouw"] },
+  { word: "Slopen", forbidden: ["Afbreken", "Gebouw", "Kapot", "Bouwen"] },
+  { word: "Repareren", forbidden: ["Maken", "Kapot", "Gereedschap", "Fixen"] },
+  { word: "Verstoppen", forbidden: ["Zoeken", "Vinden", "Hide", "Plek"] },
+  { word: "Zoeken", forbidden: ["Vinden", "Verstoppen", "Kijken", "Speuren"] },
+  { word: "Vangen", forbidden: ["Gooien", "Bal", "Handen", "Pak"] },
+  { word: "Gooien", forbidden: ["Bal", "Hand", "Vangen", "Ver"] },
+
+  // Sport & vrije tijd
+  { word: "Basketbal", forbidden: ["Bal", "Hoepel", "Sport", "Dribbelen"] },
+  { word: "Tennis", forbidden: ["Racket", "Bal", "Baan", "Sport"] },
+  { word: "Hockey", forbidden: ["Stick", "Bal", "Veld", "Sport"] },
+  { word: "Volleybal", forbidden: ["Net", "Bal", "Team", "Sport"] },
+  { word: "Handbal", forbidden: ["Bal", "Doel", "Handen", "Sport"] },
+  { word: "Badminton", forbidden: ["Racket", "Shuttle", "Net", "Sport"] },
+  { word: "Golf", forbidden: ["Club", "Bal", "Hole", "Sport"] },
+  { word: "Bowlen", forbidden: ["Kegels", "Bal", "Baan", "Strike"] },
+  { word: "Darten", forbidden: ["Pijltjes", "Bord", "Bullseye", "Gooien"] },
+  { word: "Schaken", forbidden: ["Bord", "Koning", "Pion", "Spel"] },
+  { word: "Dammen", forbidden: ["Bord", "Schijven", "Zwart", "Wit"] },
+  { word: "Kaarten", forbidden: ["Spel", "Deck", "Harten", "Schoppen"] },
+  { word: "Touwtje springen", forbidden: ["Touw", "Springen", "Kinderen", "Sport"] },
+  { word: "Kegelen", forbidden: ["Bal", "Kegels", "Baan", "Gooien"] },
+  { word: "Paardrijden", forbidden: ["Paard", "Zadel", "Rijden", "Stal"] },
+  { word: "Schaatsen", forbidden: ["IJs", "Winter", "Schoenen", "Glijden"] },
+  { word: "Skiën", forbidden: ["Sneeuw", "Berg", "Liften", "Stokken"] },
+  { word: "Snowboarden", forbidden: ["Sneeuw", "Plank", "Berg", "Winter"] },
+  { word: "Surfen", forbidden: ["Golf", "Plank", "Zee", "Water"] },
+  { word: "Duiken", forbidden: ["Water", "Onderwater", "Zwembad", "Zuurstof"] },
+  { word: "Klimmen", forbidden: ["Berg", "Hoog", "Touw", "Muur"] },
+  { word: "Kamperen", forbidden: ["Tent", "Camping", "Natuur", "Slaapzak"] },
+  { word: "Vissen", forbidden: ["Hengel", "Water", "Vis", "Aas"] },
+  { word: "Fotograferen", forbidden: ["Camera", "Foto", "Lens", "Beeld"] },
+  { word: "Lezen", forbidden: ["Boek", "Letters", "Pagina", "Verhaal"] },
+  { word: "Puzzelen", forbidden: ["Stukjes", "Leggen", "Plaatje", "Spel"] },
+  { word: "Gamen", forbidden: ["Spel", "Computer", "Controller", "Scherm"] },
+  { word: "Knutselen", forbidden: ["Lijm", "Papier", "Schaar", "Maken"] },
+  { word: "Verzamelen", forbidden: ["Sparen", "Collectie", "Bewaren", "Veel"] },
+
+  // Plaatsen & dingen
+  { word: "Bibliotheek", forbidden: ["Boeken", "Lezen", "Stil", "Lenen"] },
+  { word: "Restaurant", forbidden: ["Eten", "Ober", "Tafel", "Bestellen"] },
+  { word: "Hotel", forbidden: ["Slapen", "Kamer", "Vakantie", "Bed"] },
+  { word: "Camping", forbidden: ["Tent", "Vakantie", "Kamperen", "Caravan"] },
+  { word: "Pretpark", forbidden: ["Attracties", "Achtbaan", "Kermis", "Pret"] },
+  { word: "Speeltuin", forbidden: ["Kinderen", "Schommel", "Glijbaan", "Spelen"] },
+  { word: "Ziekenhuis", forbidden: ["Dokter", "Patiënt", "Ziek", "Bed"] },
+  { word: "Apotheek", forbidden: ["Medicijnen", "Dokter", "Pillen", "Winkel"] },
+  { word: "Postkantoor", forbidden: ["Post", "Brieven", "Pakket", "Zegel"] },
+  { word: "Bibliotheekkaart", forbidden: ["Boeken", "Lenen", "Pas", "Lezen"] },
+  { word: "Winkelcentrum", forbidden: ["Winkels", "Kopen", "Shoppen", "Kleding"] },
+  { word: "Supermarktkar", forbidden: ["Winkel", "Boodschappen", "Wielen", "Duwen"] },
+  { word: "Parkeerplaats", forbidden: ["Auto", "Parkeren", "Plek", "Wagen"] },
+  { word: "Rotonde", forbidden: ["Auto", "Rond", "Verkeer", "Weg"] },
+  { word: "Verkeerslicht", forbidden: ["Rood", "Groen", "Oranje", "Auto"] },
+  { word: "Stopbord", forbidden: ["Rood", "Auto", "Verkeer", "Stoppen"] },
+  { word: "Spoorweg", forbidden: ["Trein", "Rails", "Station", "Weg"] },
+  { word: "Bushalte", forbidden: ["Bus", "Wachten", "Station", "Reizen"] },
+  { word: "Fietspad", forbidden: ["Fiets", "Weg", "Rijden", "Auto"] },
+  { word: "Tunnel", forbidden: ["Donker", "Onder", "Weg", "Licht"] },
+  { word: "Straat", forbidden: ["Weg", "Auto", "Huizen", "Verkeer"] },
+  { word: "Plein", forbidden: ["Stad", "Midden", "Gebouwen", "Mensen"] },
+  { word: "Dorp", forbidden: ["Klein", "Huizen", "Stad", "Land"] },
+  { word: "Stad", forbidden: ["Gebouwen", "Mensen", "Verkeer", "Dorp"] },
+  { word: "Hoofdstad", forbidden: ["Land", "Regering", "Groot", "Stad"] },
+  { word: "Luchthaven", forbidden: ["Vliegtuig", "Reizen", "Terminal", "Koffer"] },
+  { word: "Treinstation", forbidden: ["Trein", "Spoor", "Perron", "Reizen"] },
+  { word: "Politiebureau", forbidden: ["Agent", "Politie", "Gevangenis", "Sirene"] },
+  { word: "Brandweerkazerne", forbidden: ["Brandweer", "Auto", "Blussen", "Kazerne"] },
+  { word: "Voetbalveld", forbidden: ["Bal", "Doel", "Gras", "Spel"] },
+  { word: "Speelplaats", forbidden: ["Kinderen", "Spelen", "School", "Plein"] },
+
+  // Natuur & weer
+  { word: "Regen", forbidden: ["Water", "Wolken", "Nat", "Paraplu"] },
+  { word: "Onweer", forbidden: ["Donder", "Bliksem", "Regen", "Storm"] },
+  { word: "Bliksem", forbidden: ["Onweer", "Licht", "Donder", "Lucht"] },
+  { word: "Donder", forbidden: ["Geluid", "Onweer", "Bliksem", "Hard"] },
+  { word: "Storm", forbidden: ["Wind", "Regen", "Hard", "Weer"] },
+  { word: "Wind", forbidden: ["Lucht", "Blazen", "Storm", "Vlieger"] },
+  { word: "Mist", forbidden: ["Wit", "Zicht", "Ochtend", "Wolken"] },
+  { word: "Hagel", forbidden: ["IJs", "Regen", "Balletjes", "Weer"] },
+  { word: "Vorst", forbidden: ["Koud", "Winter", "IJs", "Temperatuur"] },
+  { word: "IJs", forbidden: ["Koud", "Water", "Bevroren", "Smelten"] },
+  { word: "Zonsondergang", forbidden: ["Zon", "Avond", "Rood", "Lucht"] },
+  { word: "Zonsopkomst", forbidden: ["Zon", "Ochtend", "Licht", "Dag"] },
+  { word: "Regenwolk", forbidden: ["Wolk", "Regen", "Grijs", "Lucht"] },
+  { word: "Rivier", forbidden: ["Water", "Stromen", "Brug", "Zee"] },
+  { word: "Meer", forbidden: ["Water", "Zwemmen", "Boot", "Oever"] },
+  { word: "Struik", forbidden: ["Groen", "Tuin", "Bladeren", "Plant"] },
+  { word: "Gras", forbidden: ["Groen", "Tuin", "Maaien", "Veld"] },
+  { word: "Blad", forbidden: ["Boom", "Groen", "Herfst", "Vallen"] },
+  { word: "Tak", forbidden: ["Boom", "Hout", "Blad", "Brekend"] },
+  { word: "Wortel", forbidden: ["Plant", "Grond", "Boom", "Onder"] },
+  { word: "Zaad", forbidden: ["Plant", "Groeien", "Grond", "Klein"] },
+  { word: "Natuur", forbidden: ["Bomen", "Dieren", "Buiten", "Groen"] },
+  { word: "Veld", forbidden: ["Gras", "Voetbal", "Groot", "Open"] },
+  { word: "Weide", forbidden: ["Gras", "Koeien", "Boerderij", "Veld"] },
+  { word: "Jungle", forbidden: ["Bomen", "Apen", "Tropisch", "Groen"] },
+  { word: "Savanne", forbidden: ["Afrika", "Gras", "Leeuw", "Warm"] },
+  { word: "Gletsjer", forbidden: ["IJs", "Berg", "Koud", "Sneeuw"] },
+  { word: "Vulkaan", forbidden: ["Lava", "Berg", "Rook", "Uitbarsting"] },
+
+  // Entertainment & technologie
+  { word: "Film", forbidden: ["Bioscoop", "Acteur", "Scherm", "Kijken"] },
+  { word: "Serie", forbidden: ["Televisie", "Aflevering", "Kijken", "Film"] },
+  { word: "Muziek", forbidden: ["Lied", "Luisteren", "Geluid", "Zingen"] },
+  { word: "Concert", forbidden: ["Muziek", "Podium", "Zanger", "Publiek"] },
+  { word: "Theater", forbidden: ["Toneel", "Acteur", "Podium", "Publiek"] },
+  { word: "Circus", forbidden: ["Clown", "Tent", "Acrobaat", "Dieren"] },
+  { word: "Goocheltruc", forbidden: ["Magie", "Toveren", "Truc", "Illusie"] },
+  { word: "Feest", forbidden: ["Verjaardag", "Muziek", "Taart", "Cadeau"] },
+  { word: "Verjaardag", forbidden: ["Taart", "Cadeau", "Jarig", "Kaarsjes"] },
+  { word: "Kerst", forbidden: ["Kerstboom", "Cadeau", "December", "Kerstman"] },
+  { word: "Halloween", forbidden: ["Pompoen", "Spook", "Oktober", "Verkleden"] },
+  { word: "Carnaval", forbidden: ["Verkleden", "Feest", "Optocht", "Kostuum"] },
+  { word: "YouTube", forbidden: ["Video", "Kijken", "Internet", "Kanaal"] },
+  { word: "Videogame", forbidden: ["Spelen", "Controller", "Computer", "Scherm"] },
+  { word: "Controller", forbidden: ["Gamen", "Knoppen", "PlayStation", "Spel"] },
+  { word: "Internet", forbidden: ["Website", "Online", "Computer", "WiFi"] },
+  { word: "WiFi", forbidden: ["Internet", "Draadloos", "Router", "Verbinding"] },
+  { word: "Website", forbidden: ["Internet", "Pagina", "Browser", "Online"] },
+  { word: "Browser", forbidden: ["Internet", "Website", "Chrome", "Tabblad"] },
+  { word: "Wachtwoord", forbidden: ["Inloggen", "Geheim", "Account", "Code"] },
+  { word: "Emoji", forbidden: ["Geel", "Gezicht", "Bericht", "Telefoon"] },
+  { word: "Bericht", forbidden: ["App", "Sturen", "Telefoon", "Tekst"] },
+  { word: "Videobellen", forbidden: ["Camera", "Telefoon", "Praten", "Internet"] },
+  { word: "Sociale media", forbidden: ["Internet", "Instagram", "Berichten", "Online"] },
+  { word: "Robot", forbidden: ["Machine", "Metaal", "Computer", "Kunstmatig"] },
+  { word: "Kunstmatige intelligentie", forbidden: ["Computer", "Slim", "AI", "Robot"] },
+  { word: "Satelliet", forbidden: ["Ruimte", "Aarde", "Rond", "Communicatie"] },
+  { word: "Raket", forbidden: ["Ruimte", "Lanceer", "Astronaut", "Maan"] },
+  { word: "Ruimteschip", forbidden: ["Ruimte", "Astronaut", "Vliegen", "Planeet"] },
+  { word: "Planeet", forbidden: ["Aarde", "Zon", "Ruimte", "Mars"] },
+  { word: "Sterrenstelsel", forbidden: ["Sterren", "Ruimte", "Melkweg", "Heelal"] },
+  { word: "Zonnestelsel", forbidden: ["Zon", "Planeten", "Ruimte", "Aarde"] }
+];
+
+// ==========================================
+// 2. TEKENEN / UITBEELDEN (150 unieke simpele woorden)
+// ==========================================
+const drawCards = [
+
+  // ETEN & DRINKEN
+  "Stokbrood", "Pizza", "Spaghetti", "Lasagne", "Ravioli", "Macaroni", "Noodles",
+  "Rijst", "Sushi", "Taco", "Hamburger", "Hotdog",
+  "Frikandel", "Patat", "Kroket", "Bitterbal", "Pannenkoek", "Poffertjes",
+  "Wafel", "Tosti", "Brood", "Baguette", "Croissant", "Bagel", "Pretzel",
+  "Donut", "Muffin", "Brownie", "Cupcake", "Taart", "Appeltaart", "Cheesecake",
+  "Koekje", "Chocolade", "Snoep", "Lolly", "Drop", "Dropveter", "Kauwgom",
+  "Popcorn", "Suikerspin", "Marshmallow", "Stroopwafel", "Oliebollen",
+  "Appelflap", "IJsje", "Waterijsje", "Vanille-ijs", "Sorbet", "Slagroom",
+  "Banaan", "Appel", "Peer", "Citroen", "Sinaasappel", "Mandarijn", "Mango",
+  "Ananas", "Aardbei", "Framboos", "Bramen", "Bosbes", "Druif", "Watermeloen",
+  "Meloen", "Perzik", "Kiwi", "Papaja", "Lychee", "Kokosnoot", "Avocado",
+  "Granaatappel", "Passievrucht", "Vijg", "Dadels", "Kers", "Komkommer",
+  "Tomaat", "Knoflook", "Broccoli", "Bloemkool", "Spruitjes", "Wortel",
+  "Aardappel", "Ui", "Prei", "Paprika", "Mais", "Pompoen", "Courgette",
+  "Aubergine", "Champignon", "Sla", "Spinazie", "Radijs", "Biet", "Augurk",
+  "Olijf", "Ei", "Kaas", "Boter", "Pindakaas", "Honing", "Jam", "Yoghurt",
+  "Melk", "Water", "Limonade", "Sap", "Smoothie", "Milkshake", "Koffie", "Thee",
+  "Warme chocolademelk", "Soep", "Bouillon", "Ketchup", "Mayonaise", "Mosterd",
+  "Pesto", "Guacamole", "Hummus", "Sambal", "Satésaus", "Peper", "Zout",
+
+  // DIEREN
+  "Hond", "Kat", "Puppy", "Kitten", "Paard", "Koe", "Kalf", "Varken", "Schaap",
+  "Geit", "Ezel", "Stier", "Kip", "Haan", "Kuiken", "Eend", "Gans", "Kalkoen",
+  "Konijn", "Haas", "Muis", "Rat", "Hamster", "Cavia", "Eekhoorn", "Bever",
+  "Otter", "Das", "Vos", "Wolf", "Beer", "IJsbeer", "Wasbeer", "Stinkdier",
+  "Hert", "Eland", "Rendier", "Antilope", "Gazelle", "Zebra", "Giraffe",
+  "Olifant", "Neushoorn", "Nijlpaard", "Leeuw", "Tijger", "Luipaard", "Panter",
+  "Jachtluipaard", "Jaguar", "Hyena", "Aap", "Gorilla", "Chimpansee",
+  "Orang-oetan", "Baviaan", "Lemur", "Panda", "Koala", "Kangoeroe", "Lama",
+  "Alpaca", "Kameel", "Dromedaris", "Bizon", "Buffel", "Stekelvarken",
+  "Miereneter", "Luiaard", "Vogel", "Uil", "Arend", "Havik", "Valk", "Ooievaar",
+  "Zwaan", "Duif", "Meeuw", "Kraai", "Raaf", "Papegaai", "Flamingo", "Pauw",
+  "Pelikaan", "Toekan", "Kolibrie", "Specht", "Struisvogel", "Emoe", "Pinguïn",
+  "Vis", "Goudvis", "Zalm", "Forel", "Karper", "Tonijn", "Haring", "Sardine",
+  "Makreel", "Haai", "Rog", "Manta", "Orka", "Dolfijn", "Walvis", "Zeehond",
+  "Walrus", "Zeeleeuw", "Zeeotter", "Zeeduivel", "Octopus", "Inktvis", "Kwal",
+  "Krab", "Kreeft", "Garnaal", "Zeester", "Zeepaardje", "Schildpad", "Slang",
+  "Cobra", "Python", "Boa", "Krokodil", "Alligator", "Hagedis", "Leguaan",
+  "Kameleon", "Gekko", "Kikker", "Pad", "Salamander", "Axolotl", "Mug",
+  "Vlieg", "Bij", "Wesp", "Vlinder", "Mot", "Rups", "Spin", "Schorpioen",
+  "Mier", "Kevertje", "Lieveheersbeestje", "Libel", "Sprinkhaan", "Krekel",
+  "Worm", "Slak", "Naaktslak", "Teek", "Vlo", "Wandelende tak", "Wandelend blad",
+
+  // VOORWERPEN
+  "Telefoon", "Smartphone", "Tablet", "Computer", "Laptop", "Toetsenbord",
+  "Computermuis", "Monitor", "Printer", "Camera", "Drone", "Televisie",
+  "Afstandsbediening", "Gamecontroller", "Koptelefoon", "Oortjes", "Microfoon",
+  "Luidspreker", "Radio", "Oplader", "Batterij", "USB-stick", "Zaklamp",
+  "Bril", "Zonnebril", "Horloge", "Wekker", "Klok", "Spiegel", "Sleutel",
+  "Sleutelbos", "Hangslot", "Slot", "Paraplu", "Portemonnee", "Paspoort",
+  "Koffer", "Rugzak", "Tas", "Boek", "Schrift", "Pen", "Potlood", "Gum",
+  "Liniaal", "Schaar", "Lijm", "Nietmachine", "Etui", "Agenda", "Kalender",
+  "Kaart", "Wereldbol", "Kompas", "Vergrootglas", "Verrekijker", "Telescoop",
+  "Meetlint", "Zandloper", "Thermometer", "Rekenmachine", "Dobbelsteen",
+  "Puzzelstuk", "Jojo", "Tollen", "Knuffelbeer", "Pop", "Speelgoedauto",
+  "Lego", "Bal", "Frisbee", "Vlieger", "Waterpistool", "Waterballon",
+  "Touw", "Ketting", "Ring", "Kroon", "Hoed", "Pet", "Sjaal", "Handschoen",
+  "Jas", "T-shirt", "Broek", "Riem", "Sok", "Schoen", "Laars", "Zwemvliezen",
+  "Duikbril", "Snorkel", "Zwemring", "Reddingsboei",
+
+  // HUIS
+  "Huis", "Villa", "Flat", "Appartement", "Boomhut", "Tent", "Garage", "Schuur",
+  "Deur", "Raam", "Deurmat", "Deurbel", "Brievenbus", "Kapstok", "Schoenenrek",
+  "Trap", "Lift", "Tafel", "Stoel", "Kruk", "Bank", "Bed", "Matras", "Kussen",
+  "Deken", "Kast", "Kledingkast", "Boekenkast", "Bureau", "Nachtkastje",
+  "Lamp", "Hanglamp", "Vloerlamp", "Kroonluchter", "Gordijn", "Tapijt",
+  "Schilderij", "Fotolijst", "Vaas", "Bloempot", "Plant", "Kamerplant",
+  "Koelkast", "Vriezer", "Oven", "Magnetron", "Vaatwasser", "Waterkoker",
+  "Broodrooster", "Blender", "Mixer", "Koekenpan", "Steelpan", "Vergiet",
+  "Snijplank", "Pollepel", "Spatel", "Maatbeker", "Bord", "Kom", "Beker",
+  "Glas", "Vork", "Mes", "Lepel", "Theepot", "Thermoskan", "Afwasborstel",
+  "Spons", "Vaatdoek", "Keukenrol", "Vuilnisbak", "Wasmand", "Wasmachine",
+  "Droger", "Waslijn", "Wasknijper", "Strijkijzer", "Strijkplank",
+  "Stofzuiger", "Bezem", "Dweil", "Emmer", "Gieter", "Zeep", "Handdoek",
+  "Toilet", "Wastafel", "Badkuip", "Douche", "Radiator", "Thermostaat",
+  "Ventilator", "Airco", "Schoorsteen", "Dak", "Balkon", "Tuin", "Schutting",
+
+  // GEREEDSCHAP
+  "Hamer", "Zaag", "Handzaag", "Cirkelzaag", "Schroevendraaier", "Schroef",
+  "Spijker", "Bout", "Moer", "Tang", "Waterpomptang", "Steeksleutel",
+  "Inbussleutel", "Boormachine", "Boor", "Vijl", "Beitel", "Schuurpapier",
+  "Schuurmachine", "Waterpas", "Werkbank", "Gereedschapskist", "Verfkwast",
+  "Verfroller", "Verfpot", "Verfbak", "Lijmpistool", "Ducttape", "Plakband",
+  "Kabelbinder", "Kruiwagen", "Ladder",
+
+  // VERVOER
+  "Auto", "Raceauto", "Oldtimer", "Cabrio", "Limousine", "Taxi", "Bus",
+  "Schoolbus", "Dubbeldekker", "Trein", "Stoomtrein", "Locomotief",
+  "Treinwagon", "Goederentrein", "Tram", "Metro", "Monorail", "Fiets",
+  "Racefiets", "Mountainbike", "Tandem", "Driewieler", "Eenwieler", "Step",
+  "Skateboard", "Rollerblades", "Scooter", "Brommer", "Motor", "Quad",
+  "Tractor", "Vrachtwagen", "Vuilniswagen", "Brandweerwagen", "Politieauto",
+  "Ambulance", "Graafmachine", "Bulldozer", "Kraan", "Betonmixer",
+  "Paardenkoets", "Slede", "Hondenslee", "Vliegtuig", "Straaljager",
+  "Helikopter", "Luchtballon", "Zeppelin", "Raket", "Boot", "Kano", "Kajak",
+  "Roeiboot", "Zeilboot", "Speedboot", "Jacht", "Veerboot", "Cruiseschip",
+  "Vrachtschip", "Onderzeeër", "Duikboot", "Catamaran", "Gondel", "Anker",
+  "Parachute", "Landingsbaan", "Cockpit", "Hangar", "Treinspoor", "Tunnel",
+  "Brug", "Rotonde", "Tankstation", "Parkeerplaats", "Verkeerslicht",
+  "Stopbord", "Zebrapad", "Verkeerskegel", "Bushalte",
+
+  // ACTIVITEITEN
+  "Zwemmen", "Hardlopen", "Slapen", "Dansen", "Boksen", "Vissen", "Schilderen",
+  "Voetballen", "Fietsen", "Typen", "Zingen", "Lachen", "Huilen", "Niesen",
+  "Hoesten", "Gapen", "Klimmen", "Schommelen", "Glijden", "Schaatsen", "Skiën",
+  "Snowboarden", "Surfen", "Zonnen", "Bouwen", "Verven", "Knippen", "Poetsen",
+  "Wassen", "Toveren", "Jongleren", "Springen", "Hinkelen", "Wandelen",
+  "Kruipen", "Koken", "Bakken", "Lezen", "Schrijven", "Tekenen", "Fotograferen",
+  "Filmen", "Telefoneren", "Gamen", "Tuinieren", "Kamperen", "Vliegen",
+  "Duiken", "Roeien", "Touwtjespringen", "Tennissen", "Basketballen",
+  "Golfen", "Bowlen", "Skateboarden", "Kegelen", "Vliegeren", "Puzzelen",
+  "Kaarten", "Knutselen", "Breien", "Afwassen", "Strijken", "Tandenpoetsen",
+  "Douchen", "Aankleden", "Fluiten", "Klappen", "Winken", "Wijzen", "Duwen",
+  "Trekken", "Dragen", "Tillen", "Gooien", "Vangen", "Schoppen", "Rollen",
+  "Draaien", "Verstoppertje", "Tikkertje", "Stoelendans", "Zaklopen",
+  "Koekhappen", "Kamperen", "Barbecueën", "Vuur maken", "Sneeuwballen gooien",
+  "Zandkasteel bouwen", "Vlieger oplaten", "Tent opzetten", "Band plakken",
+
+  // SPORT
+  "Voetbal", "Basketbal", "Tennis", "Tennisbal", "Tennisracket", "Badminton",
+  "Badmintonracket", "Shuttlecock", "Volleybal", "Handbal", "Rugbybal",
+  "Honkbal", "Honkbalknuppel", "Golf", "Golfclub", "Golfbal", "Bokszak",
+  "Bokshandschoen", "Karate", "Judo", "Judoband", "Dartbord", "Dartpijl",
+  "Bowlingbal", "Bowlingbaan", "Pingpongtafel", "Pingpongbal", "Pingpongbatje",
+  "Turnen", "Turnmat", "Trampoline", "Klimwand", "Skiën", "Snowboarden",
+  "Schaatsen", "Surfen", "Duiken", "Marathon", "Hordelopen", "Polsstok",
+  "Speerwerpen", "Discuswerpen", "Medaille", "Trofee", "Beker", "Podium",
+  "Scheidsrechter", "Rode kaart", "Gele kaart", "Scorebord", "Tribune",
+  "Supporter", "Mascotte", "Keeper", "Keepershandschoen", "Voetbalveld",
+
+  // BEROEPEN
+  "Dokter", "Tandarts", "Dierenarts", "Verpleegkundige", "Apotheker",
+  "Politieagent", "Detective", "Brandweerman", "Piloot", "Steward",
+  "Treinmachinist", "Buschauffeur", "Taxichauffeur", "Kapitein", "Matroos",
+  "Visser", "Boer", "Bakker", "Kok", "Slager", "Kapper", "Timmerman",
+  "Metselaar", "Elektricien", "Loodgieter", "Monteur", "Architect", "Ingenieur",
+  "Programmeur", "Fotograaf", "Cameraman", "Journalist", "Presentator",
+  "Acteur", "Regisseur", "Zanger", "Muzikant", "Dirigent", "Kunstenaar",
+  "Schrijver", "Bibliothecaris", "Wetenschapper", "Archeoloog", "Astronaut",
+  "Rechter", "Advocaat", "Postbode", "Vuilnisman", "Schoonmaker", "Tuinman",
+  "Dierenverzorger", "Leraar", "Gymdocent", "Goochelaar", "Clown", "Piraat",
+  "Koning", "Koningin", "Prins", "Prinses", "Ridder", "Ninja", "Superheld",
+
+  // MUZIEK
+  "Gitaar", "Elektrische gitaar", "Basgitaar", "Piano", "Vleugel", "Keyboard",
+  "Drumstel", "Trommel", "Viool", "Cello", "Contrabas", "Trompet", "Trombone",
+  "Saxofoon", "Klarinet", "Fluit", "Harp", "Accordeon", "Mondharmonica",
+  "Tamboerijn", "Triangel", "Maracas", "Dirigent", "Muzieknoot", "Bladmuziek",
+  "Concert", "Podium", "Disco", "Dansvloer", "DJ", "Platenspeler",
+
+  // NATUUR
+  "Boom", "Eik", "Berk", "Beuk", "Esdoorn", "Wilg", "Palmboom", "Dennenboom",
+  "Spar", "Kerstboom", "Bamboe", "Struik", "Haag", "Klimop", "Mos", "Varen",
+  "Cactus", "Paddenstoel", "Zonnebloem", "Tulp", "Roos", "Madeliefje", "Klaproos",
+  "Narcis", "Hyacint", "Orchidee", "Waterlelie", "Lotus", "Paardenbloem",
+  "Lavendel", "Eikel", "Dennnenappel", "Boomstronk", "Boomwortel", "Boomschors",
+  "Berg", "Heuvel", "Rivier", "Beek", "Waterval", "Meer", "Zee", "Strand",
+  "Eiland", "Vulkaan", "Woestijn", "Jungle", "Bos", "Grot", "Moeras", "Vallei",
+  "Ravijn", "Klip", "Rots", "Duin", "Dijk", "Polder", "Weiland", "Akker",
+  "Graanveld", "Molen",
+
+  // WEER
+  "Zon", "Maan", "Ster", "Wolk", "Regenwolk", "Onweerswolk", "Regen",
+  "Regenbui", "Motregen", "Plensbui", "Sneeuw", "Sneeuwvlok", "Sneeuwpop",
+  "Sneeuwstorm", "Hagel", "IJs", "IJspegel", "Mist", "Nevel", "Wind",
+  "Storm", "Orkaan", "Tornado", "Bliksem", "Donder", "Regenboog",
+  "Dubbele regenboog", "Zonsopkomst", "Zonsondergang", "Volle maan",
+  "Halve maan", "Zonsverduistering", "Maansverduistering", "Sterrenhemel",
+
+  // STAD
+  "Wolkenkrabber", "Flatgebouw", "Kantoorgebouw", "Winkel", "Supermarkt",
+  "Bakkerij", "Restaurant", "Café", "Bioscoop", "Theater", "Museum",
+  "Bibliotheek", "Ziekenhuis", "Politiebureau", "Brandweerkazerne", "School",
+  "Kerk", "Station", "Luchthaven", "Haven", "Park", "Fontein", "Standbeeld",
+  "Monument", "Parkbank", "Speeltuin", "Wipwap", "Draaimolen", "Glijbaan",
+  "Schommel", "Straat", "Voetpad", "Fietspad", "Winkelstraat", "Marktplein",
+  "Parkeergarage", "Pinautomaat", "Kassa", "Winkelmandje", "Etalage",
+  "Straatmuzikant", "Lantaarnpaal", "Straatnaambord", "Huisnummer",
+
+  // KERMIS
+  "Achtbaan", "Reuzenrad", "Botsauto", "Spookhuis", "Grijpmachine",
+  "Popcornkraam", "Suikerspinkraam", "Oliebollenkraam", "Schiettent",
+  "Ballonnenkraam", "Kermiswagen", "Kermislicht", "Attractie", "Ticket",
+  "Polsbandje", "Kermisprijs", "Knuffelbeer",
+
+  // FEEST
+  "Cadeau", "Ballon", "Feesthoed", "Confetti", "Serpentine", "Vuurwerk",
+  "Verjaardag", "Feesttaart", "Kaarsje", "Slinger", "Piñata", "Strik",
+  "Cadeaupapier", "Feestbril", "Feestmasker", "Uitnodiging", "Kerstboom",
+  "Kerstbal", "Kerstman", "Rendier", "Slee", "Kerstsok", "Paasei",
+  "Paashaas", "Paasmandje", "Valentijnskaart", "Hartjesballon",
+
+  // PIRATEN & AVONTUUR
+  "Piratenschip", "Piratenvlag", "Piratenhoed", "Sabel", "Haak", "Schatkaart",
+  "Schatkist", "Gouden munt", "Diamant", "Robijn", "Smaragd", "Parel",
+  "Kanonskogel", "Kanonnen", "Loopplank", "Scheepsmast", "Zeil", "Kraaiennest",
+  "Scheepsdek", "Stuurwiel", "Vuurtoren", "Onbewoond eiland", "Palmboom",
+  "Verborgen grot", "Touwladder", "Schatzoeken",
+
+  // RUIMTE
+  "Ruimteschip", "Ruimtepak", "Ruimtehelm", "Zuurstoftank", "Maanlander",
+  "Maanwagen", "Marsrover", "Satelliet", "Satellietschotel", "Ruimtesonde",
+  "Ruimtestation", "Lanceerplatform", "Rakettenmotor", "Aftellen", "Meteoor",
+  "Meteoorregen", "Komeet", "Asteroïde", "Zwarte gat", "UFO", "Alien",
+  "Alienplaneet", "Sterrenbeeld", "Melkweg", "Grote Beer", "Poolster",
+  "Aarde", "Mars", "Jupiter", "Saturnus", "Venus", "Mercurius", "Neptunus",
+  "Uranus", "Pluto", "Zonnestelsel",
+
+  // FANTASIE
+  "Spook", "Robot", "Draak", "Eenhoorn", "Reus", "Tovenaar", "Heks", "Fee",
+  "Elf", "Kabouter", "Vampier", "Mummie", "Zombie", "Monster", "Zeemeermin",
+  "Zeemeerman", "Trol", "Weerwolf", "Toverstaf", "Toverboek", "Toverdrank",
+  "Magische spiegel", "Magische sleutel", "Vliegend tapijt", "Kristallen bol",
+  "Heksenketel", "Heksenbezem", "Drakenei", "Drakenvuur", "Eenhoornhoorn",
+  "Feeënvleugels", "Kabouterhuis", "Trollenbrug", "Kasteelpoort", "Ophaalbrug",
+  "Slotgracht", "Ridderhelm", "Ridderzwaard", "Schild",
+
+  // GRIEZELIG
+  "Geest", "Skelet", "Grafsteen", "Kerkhof", "Vleermuis", "Spinweb",
+  "Kerkhofhek", "Donker bos", "Geheime schaduw", "Halloweenpompoen",
+  "Frankenstein", "Dracula", "Weerwolf", "Spookkasteel", "Spookhuis",
+  "Krassende deur", "Griezelmasker", "Monsteroog",
+
+  // SCHOOL
+  "Schoolbord", "Whiteboard", "Krijtje", "Schoolbel", "Schoolbus", "Schoolplein",
+  "Gymzaal", "Kantine", "Bibliotheek", "Toets", "Huiswerk", "Rapport",
+  "Rekenles", "Tekenles", "Gymles", "Schooltas", "Broodtrommel", "Drinkfles",
+  "Wereldkaart", "Globe", "Schoolbank", "Schoolstoel", "Etui", "Markeerstift",
+
+  // VAKANTIE
+  "Hotel", "Hotelkamer", "Hotelbed", "Hotelzwembad", "Receptie", "Camping",
+  "Caravan", "Campingstoel", "Campingtafel", "Slaapmat", "Slaapzak",
+  "Kampvuur", "Marshmallow roosteren", "Paspoortcontrole", "Douane",
+  "Bagageband", "Boardingpass", "Vertrekbord", "Aankomstbord", "Souvenir",
+  "Ansichtkaart", "Zeezicht", "Bergtop", "Skilift", "Skipiste", "Strandstoel",
+  "Strandtent", "Strandbal", "Strandlaken", "Zandkasteel", "Schelp zoeken",
+  "Zonnebrand", "Zonnehoed", "Badhanddoek", "Parasol",
+
+  // TECHNOLOGIE
+  "Robotarm", "Joystick", "Arcadekast", "Spelcomputer", "Wifi-router",
+  "Stopcontact", "Stekker", "Elektriciteitsmast", "Zonnepaneel", "Windturbine",
+  "Server", "Serverkast", "Beveiligingscamera", "Deurbelcamera", "Smartwatch",
+  "VR-bril", "Virtual reality", "3D-printer", "Printerpapier", "Scanner",
+  "Projector", "Projectiescherm", "USB-kabel", "Oplaadkabel", "Powerbank",
+
+  // SPELEN
+  "Monopoly", "Kaartspel", "Speelkaart", "Joker", "Hartenkaart", "Schoppenkaart",
+  "Klaverenkaart", "Ruitenkaart", "Schaakbord", "Schaakstuk", "Dambord",
+  "Dambordstuk", "Domino", "Pion", "Spelbord", "Gameover", "Startknop",
+  "Pauzeknop", "Highscore", "Muntje", "Levensbalk", "Schild", "Zwaard",
+  "Toverdrank", "Schatkist", "Doolhof", "Raadsel", "Mysterie",
+
+  // GRAPPIGE ACTIES
+  "Over een banaan struikelen", "Een ballon laten knappen", "Een cadeau uitpakken",
+  "Een taart bakken", "Een mug wegjagen", "Een vlieg vangen", "Een deur proberen te openen",
+  "Een lege batterij vinden", "Een paraplu die binnenstebuiten klapt",
+  "Verdwalen", "Een schat vinden", "Een geheime code kraken",
+  "Een mysterie oplossen", "Een robot repareren", "Een draak verslaan",
+  "Op de maan lopen", "In een achtbaan zitten", "Van een duikplank springen",
+  "Een wereldrecord breken", "Een sneeuwpop maken", "Een tent opzetten",
+  "Een lekke band", "Een kapotte fiets", "Een vallend glas", "Een vliegende hoed",
+  "Een pratende kat", "Een zingende hond", "Een dansende banaan",
+  "Een slapende reus", "Een boze clown", "Een verdwaalde piraat",
+  "Een astronaut op vakantie", "Een dokter met een paraplu",
+  "Een politieagent op een skateboard", "Een brandweerman die ijs eet",
+  "Een koning op de fiets", "Een ninja die struikelt", "Een robot die danst",
+  "Een alien die pizza eet", "Een pinguïn op ski's", "Een krokodil met een bril",
+  "Een hond achter het stuur", "Een kat in een vliegtuig",
+  "Een koe op een trampoline", "Een olifant op een fiets"
+];
+    let state = {
+      players: [],
+      timerDuration: 60,
+      voteFrequency: 3,
+      pot: 0,
+      currentRound: 1,
+      usedTabooWords: [],
+      usedDrawWords: [],
+      activePlayerIndex: 0,
+      timerInterval: null,
+      timeRemaining: 0,
+      pendingJokerCost: 0,
+      currentReward: 0,
+      hasJokerOffer: false,
+      jokerEditPlayerIndex: 0,
+      currentTabooCard: null,
+      currentMode: 'omschrijven'
+    };
+
+    function playAudioAlarm() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(440, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.3);
+        osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.6);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.9);
+
+        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 1.0);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 1.0);
+      } catch (e) {
+        console.error("Audio trigger mislukt:", e);
+      }
+    }
+
+    function showModal(title, message, callback) {
+      document.getElementById('modal-title').innerText = title;
+      document.getElementById('modal-message').innerText = message;
+      const modal = document.getElementById('custom-modal');
+      modal.classList.add('active');
+      window.modalCallback = callback || null;
+    }
+
+    function closeModal() {
+      document.getElementById('custom-modal').classList.remove('active');
+      if (window.modalCallback) {
+        const cb = window.modalCallback;
+        window.modalCallback = null;
+        cb();
+      }
+    }
+
+    function switchScreen(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+      updatePotDisplays();
+      window.scrollTo(0, 0);
+    }
+
+    function updatePotDisplays() {
+      document.querySelectorAll('.pot-badge').forEach(el => {
+        const amountSpan = el.querySelector('.pot-amount');
+        if (amountSpan) amountSpan.innerText = state.pot;
+
+        if (state.pot < 0) {
+          el.style.color = '#ef4444';
+          el.style.borderColor = '#ef4444';
+        } else {
+          el.style.color = '#10b981';
+          el.style.borderColor = '#475569';
+        }
+      });
+    }
+
+    function startGame() {
+      const namesInput = document.getElementById('input-players').value;
+      const timerInput = document.getElementById('input-timer').value;
+
+      const rawNames = namesInput
+        .split(',')
+        .map(n => n.trim().replace(/\s+/g, ' '))
+        .filter(n => n.length > 0);
+
+      if (rawNames.length < 3) {
+        showModal('Te weinig spelers', 'Voer ten minste 3 spelersnamen in (komma-gescheiden).');
+        return;
+      }
+
+      if (rawNames.length > 30) {
+        showModal('Te veel spelers', 'Gebruik maximaal 30 spelers.');
+        return;
+      }
+
+      if (rawNames.some(name => name.length > 30)) {
+        showModal('Naam te lang', 'Een spelersnaam mag maximaal 30 tekens bevatten.');
+        return;
+      }
+
+      const normalizedNames = rawNames.map(name => name.toLocaleLowerCase('nl-NL'));
+      if (new Set(normalizedNames).size !== rawNames.length) {
+        showModal('Dubbele naam', 'Gebruik voor iedere speler een unieke naam.');
+        return;
+      }
+
+      const parsedTimer = Number.parseInt(timerInput, 10);
+      if (!Number.isInteger(parsedTimer) || parsedTimer < 10 || parsedTimer > 3600) {
+        showModal('Ongeldige timer', 'De timer moet tussen 10 en 3600 seconden liggen.');
+        return;
+      }
+
+      state.timerDuration = parsedTimer;
+      state.usedTabooWords = [];
+      state.usedDrawWords = [];
+
+      const molIndex = Math.floor(Math.random() * rawNames.length);
+
+      state.players = rawNames.map((name, idx) => ({
+        id: idx,
+        name: name,
+        role: idx === molIndex ? 'Mol' : 'Kandidaat',
+        jokers: 0,
+        votes: []
+      }));
+
+      state.activePlayerIndex = 0;
+      showRevealHandover();
+    }
+
+    function showRevealHandover() {
+      if (state.activePlayerIndex >= state.players.length) {
+        switchScreen('screen-voting-setup');
+        return;
+      }
+      const player = state.players[state.activePlayerIndex];
+      document.getElementById('handover-player-name').innerText = player.name;
+      switchScreen('screen-reveal-handover');
+    }
+
+    function showRoleSecret() {
+      const player = state.players[state.activePlayerIndex];
+      document.getElementById('secret-player-title').innerText = `Rol van ${player.name}`;
+      const roleText = document.getElementById('secret-role-text');
+
+      roleText.innerText = player.role.toUpperCase();
+      roleText.className = player.role === 'Mol' ? 'role-title' : 'role-title kandidaat';
+
+      switchScreen('screen-reveal-secret');
+    }
+
+    function confirmRoleSeen() {
+      state.activePlayerIndex++;
+      showRevealHandover();
+    }
+
+    function startTasksPhase() {
+      state.voteFrequency = parseInt(document.getElementById('select-vote-freq').value);
+      state.activePlayerIndex = 0;
+      state.currentRound = 1;
+      nextTaskTurn();
+    }
+
+    function nextTaskTurn() {
+      const player = state.players[state.activePlayerIndex];
+
+// Kies eerst omschrijven of uitbeelden
+      state.currentMode = Math.random() < 0.5
+        ? 'omschrijven'
+        : 'uitbeelden';
+
+      if (state.currentMode === 'omschrijven') {
+        // Alleen kaarten die nog niet gebruikt zijn; als de stapel op is, begint hij opnieuw.
+        let availableCards = tabooCards.filter(
+          card => !state.usedTabooWords.includes(card.word)
+        );
+        if (availableCards.length === 0) {
+          state.usedTabooWords = [];
+          availableCards = tabooCards.slice();
+        }
+        const pick = availableCards[Math.floor(Math.random() * availableCards.length)];
+        state.currentTabooCard = pick;
+        state.usedTabooWords.push(pick.word);
+      } else {
+        // Uitbeelden gebruikt de aparte (veel grotere) woordenlijst.
+        let availableWords = drawCards.filter(
+          word => !state.usedDrawWords.includes(word)
+        );
+        if (availableWords.length === 0) {
+          state.usedDrawWords = [];
+          availableWords = drawCards.slice();
+        }
+        const pickWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+        state.currentTabooCard = { word: pickWord, forbidden: [] };
+        state.usedDrawWords.push(pickWord);
+      }
+
+      const rewards = [50, 75, 100];
+      state.currentReward = rewards[Math.floor(Math.random() * rewards.length)];
+
+      // 5% kans op een joker-aanbod (0.05)
+      state.hasJokerOffer = Math.random() < 0.05;
+      if (state.hasJokerOffer) {
+        const costs = [100, 150, 200];
+        state.pendingJokerCost = costs[Math.floor(Math.random() * costs.length)];
+      }
+
+      document.getElementById('task-handover-player-name').innerText = player.name;
+      switchScreen('screen-task-handover');
+    }
+
+    function handleSecretTaskStart() {
+      if (state.hasJokerOffer) {
+        document.getElementById('joker-cost-display').innerText = `€${state.pendingJokerCost}`;
+        switchScreen('screen-joker-offer');
+      } else {
+        startTaskTimer();
+      }
+    }
+
+    function buyJokerSecretly() {
+      const player = state.players[state.activePlayerIndex];
+      state.pot -= state.pendingJokerCost;
+      player.jokers++;
+      state.hasJokerOffer = false;
+      finishTaskTurn();
+    }
+
+    function declineJokerSecretly() {
+      state.hasJokerOffer = false;
+      startTaskTimer();
+    }
+
+    function startTaskTimer() {
+      document.getElementById('display-target-word').innerText = state.currentTabooCard.word;
+      document.getElementById('task-reward-amount').innerText = state.currentReward;
+
+      const modeBadge = document.getElementById('task-mode-badge');
+      const forbiddenSec = document.getElementById('forbidden-section');
+      const actingSec = document.getElementById('acting-section');
+
+      if (state.currentMode === 'omschrijven') {
+        modeBadge.innerText = 'OMSCHRIJVEN';
+        modeBadge.className = 'mode-badge mode-omschrijven';
+        forbiddenSec.style.display = 'block';
+        actingSec.style.display = 'none';
+
+        const forbiddenContainer = document.getElementById('display-forbidden-words');
+        forbiddenContainer.replaceChildren();
+        state.currentTabooCard.forbidden.forEach(word => {
+          const tag = document.createElement('span');
+          tag.className = 'forbidden-tag';
+          tag.textContent = word;
+          forbiddenContainer.appendChild(tag);
+        });
+      } else {
+        modeBadge.innerText = 'UITBEELDEN';
+        modeBadge.className = 'mode-badge mode-uitbeelden';
+        forbiddenSec.style.display = 'none';
+        actingSec.style.display = 'block';
+      }
+
+      state.timeRemaining = state.timerDuration;
+      updateTimerDisplay();
+
+      document.getElementById('btn-success-task').disabled = false;
+
+      switchScreen('screen-task');
+
+      clearInterval(state.timerInterval);
+      state.timerInterval = setInterval(() => {
+        state.timeRemaining--;
+        updateTimerDisplay();
+
+        if (state.timeRemaining <= 0) {
+          clearInterval(state.timerInterval);
+          playAudioAlarm();
+          document.getElementById('btn-success-task').disabled = true;
+          showModal('Tijd is om!', 'De tijd is verstreken. De opdracht is automatisch mislukt.', () => {
+            finishTaskTurn();
+          });
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(state.timeRemaining / 60);
+      const secs = state.timeRemaining % 60;
+      document.getElementById('timer-count').innerText =
+        `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function completeTask(success) {
+      clearInterval(state.timerInterval);
+      if (success) {
+        state.pot += state.currentReward;
+        showModal('Gefeliciteerd!', `Opdracht gelukt! Er komt €${state.currentReward} in de pot.`, () => {
+          finishTaskTurn();
+        });
+      }
+    }
+
+    function finishTaskTurn() {
+      state.activePlayerIndex++;
+
+      if (state.activePlayerIndex >= state.players.length) {
+        state.activePlayerIndex = 0;
+
+        if (state.currentRound % state.voteFrequency === 0) {
+          startVotingPhase();
+        } else {
+          state.currentRound++;
+          showModal('Volgende Ronde', `Ronde ${state.currentRound} gaat van start!`, () => {
+            nextTaskTurn();
+          });
+        }
+      } else {
+        nextTaskTurn();
+      }
+    }
+
+    function startVotingPhase() {
+      state.activePlayerIndex = 0;
+      showVoteHandover();
+    }
+
+    function showVoteHandover() {
+      if (state.activePlayerIndex >= state.players.length) {
+        switchScreen('screen-post-vote-choice');
+        return;
+      }
+
+      const player = state.players[state.activePlayerIndex];
+      document.getElementById('vote-handover-name').innerText = player.name;
+      switchScreen('screen-vote-handover');
+    }
+
+    function startVotingForPlayer() {
+      const player = state.players[state.activePlayerIndex];
+      document.getElementById('vote-action-title').innerText = `Stem van ${player.name}`;
+
+      const historyList = document.getElementById('personal-vote-history');
+      historyList.replaceChildren();
+
+      if (player.votes.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'history-item';
+        empty.textContent = 'Nog geen eerdere stemmen.';
+        historyList.appendChild(empty);
+      } else {
+        player.votes.forEach((v, idx) => {
+          const item = document.createElement('div');
+          item.className = 'history-item';
+          item.append(`Stemronde ${idx + 1}: `);
+
+          const strong = document.createElement('strong');
+          strong.textContent = v;
+          item.appendChild(strong);
+
+          historyList.appendChild(item);
+        });
+      }
+
+      const select = document.getElementById('select-suspect');
+      select.replaceChildren();
+
+      // Filter de huidige speler eruit zodat je niet op jezelf kan stemmen
+      state.players
+        .filter(p => p.id !== player.id)
+        .forEach(p => {
+          const option = document.createElement('option');
+          option.value = p.name;
+          option.textContent = p.name;
+          select.appendChild(option);
+        });
+
+      switchScreen('screen-vote-action');
+    }
+
+    function submitVote() {
+      const player = state.players[state.activePlayerIndex];
+      const votedName = document.getElementById('select-suspect').value;
+      const validTarget = state.players.some(
+        p => p.id !== player.id && p.name === votedName
+      );
+
+      if (!validTarget) {
+        showModal('Ongeldige stem', 'Kies een geldige andere speler.');
+        return;
+      }
+
+      player.votes.push(votedName);
+      state.activePlayerIndex++;
+      showVoteHandover();
+    }
+
+    function continueToNextRound() {
+      state.currentRound++;
+      state.activePlayerIndex = 0;
+      showModal('Volgende Ronde', `Ronde ${state.currentRound} gaat van start!`, () => {
+        nextTaskTurn();
+      });
+    }
+
+    function confirmStopGame() {
+      showModal('Spel Beëindigen?', 'Weet je zeker dat je het spel wilt beëindigen en naar de uitslag wilt gaan?', () => {
+        startFinalPhase();
+      });
+    }
+
+    function startFinalPhase() {
+      clearInterval(state.timerInterval);
+      state.jokerEditPlayerIndex = 0;
+      processNextJokerEdit();
+    }
+
+    function processNextJokerEdit() {
+      if (state.jokerEditPlayerIndex >= state.players.length) {
+        renderFinalResults();
+        return;
+      }
+
+      const player = state.players[state.jokerEditPlayerIndex];
+      if (player.jokers > 0 && player.votes.length > 0) {
+        document.getElementById('joker-edit-subtitle').innerText =
+          `${player.name} heeft ${player.jokers} joker(s). Je mag een eerdere stem wijzigen.`;
+        document.getElementById('jokers-left-count').innerText = player.jokers;
+
+        const roundSelect = document.getElementById('select-edit-round');
+        roundSelect.replaceChildren();
+        player.votes.forEach((v, i) => {
+          const option = document.createElement('option');
+          option.value = String(i);
+          option.textContent = `Stemronde ${i + 1} (Stem: ${v})`;
+          roundSelect.appendChild(option);
+        });
+
+        const suspectSelect = document.getElementById('select-new-suspect');
+        suspectSelect.replaceChildren();
+
+        // Filter de huidige speler eruit bij het aanpassen van stemmen met een joker
+        state.players
+          .filter(p => p.id !== player.id)
+          .forEach(p => {
+            const option = document.createElement('option');
+            option.value = p.name;
+            option.textContent = p.name;
+            suspectSelect.appendChild(option);
+          });
+
+        switchScreen('screen-joker-edits');
+      } else {
+        state.jokerEditPlayerIndex++;
+        processNextJokerEdit();
+      }
+    }
+
+    function applyJokerEdit() {
+      const player = state.players[state.jokerEditPlayerIndex];
+      const roundIdx = Number.parseInt(
+        document.getElementById('select-edit-round').value,
+        10
+      );
+      const newName = document.getElementById('select-new-suspect').value;
+
+      const validRound =
+        Number.isInteger(roundIdx) &&
+        roundIdx >= 0 &&
+        roundIdx < player.votes.length;
+
+      const validTarget = state.players.some(
+        p => p.id !== player.id && p.name === newName
+      );
+
+      if (!validRound || !validTarget || player.jokers <= 0) {
+        showModal('Ongeldige wijziging', 'Deze jokeractie is niet geldig.');
+        return;
+      }
+
+      player.votes[roundIdx] = newName;
+      player.jokers--;
+
+      if (player.jokers > 0) {
+        processNextJokerEdit();
+      } else {
+        state.jokerEditPlayerIndex++;
+        processNextJokerEdit();
+      }
+    }
+
+    function skipJokerEdit() {
+      state.jokerEditPlayerIndex++;
+      processNextJokerEdit();
+    }
+
+    function renderFinalResults() {
+      // Zoek de echte Mol
+      const mol = state.players.find(p => p.role === 'Mol');
+
+      document.getElementById('mol-reveal-name').innerText =
+        mol ? mol.name : 'Onbekend';
+
+      // ==========================================
+      // BEREKEN WIE HET VAAKST OP DE MOL STEMDE
+      // ==========================================
+
+      const voteCounts = Object.create(null);
+
+      state.players.forEach(player => {
+        voteCounts[player.name] = 0;
+      });
+
+      // Tel alleen stemmen die op de echte Mol zijn uitgebracht
+      state.players.forEach(player => {
+        player.votes.forEach(vote => {
+          if (mol && vote === mol.name) {
+            voteCounts[player.name]++;
+          }
+        });
+      });
+
+      // Vind het hoogste aantal stemmen
+      let highestVotes = 0;
+
+      state.players.forEach(player => {
+        if (voteCounts[player.name] > highestVotes) {
+          highestVotes = voteCounts[player.name];
+        }
+      });
+
+      // Vind alle spelers met het hoogste aantal
+      const winners = state.players.filter(
+        player => voteCounts[player.name] === highestVotes
+      );
+
+      // ==========================================
+      // WINNAAR TONEN
+      // ==========================================
+
+      const winnerName = document.getElementById('winner-name');
+      const winnerVotes = document.getElementById('winner-votes');
+
+      if (highestVotes === 0) {
+        winnerName.innerText = 'Niemand';
+        winnerVotes.innerText = 'Niemand heeft op de Mol gestemd';
+      } else if (winners.length === 1) {
+        winnerName.innerText = winners[0].name;
+        winnerVotes.innerText =
+          `${highestVotes} ${highestVotes === 1 ? 'stem' : 'stemmen'} op de Mol`;
+      } else {
+        winnerName.innerText = 'GELIJKE STAND!';
+        winnerVotes.innerText =
+          `${winners.map(p => p.name).join(' & ')} hebben allebei ${highestVotes} stemmen op de Mol`;
+      }
+
+      // ==========================================
+      // STEMHISTORIE TONEN
+      // ==========================================
+
+      const historyContainer =
+        document.getElementById('final-history-list');
+
+      historyContainer.replaceChildren();
+
+      // Sorteer spelers op aantal goede Mol-stemmen
+      const sortedPlayers = [...state.players].sort(
+        (a, b) => voteCounts[b.name] - voteCounts[a.name]
+      );
+
+      sortedPlayers.forEach(player => {
+        const item = document.createElement('div');
+        item.className = 'history-item';
+
+        const name = document.createElement('strong');
+        name.textContent = player.name;
+        item.appendChild(name);
+
+        const score = document.createElement('span');
+        score.className = 'vote-score';
+        score.textContent = ` — ${voteCounts[player.name]} op de Mol`;
+        item.appendChild(score);
+
+        item.appendChild(document.createElement('br'));
+
+        const votes = document.createElement('span');
+        votes.style.color = '#94a3b8';
+        votes.textContent =
+          `Stemmen: ${player.votes.join(', ') || 'Geen stemmen uitgebracht'}`;
+        item.appendChild(votes);
+
+        historyContainer.appendChild(item);
+      });
+
+      switchScreen('screen-results');
+    }
+
+    // Veilige event-afhandeling: geen dynamische code-uitvoering of inline handlers.
+    const actionHandlers = Object.freeze({
+      startGame: () => { if (typeof window.keepScreenAwake === 'function') window.keepScreenAwake(); startGame(); },
+      showRoleSecret: () => showRoleSecret(),
+      confirmRoleSeen: () => confirmRoleSeen(),
+      startTasksPhase: () => startTasksPhase(),
+      handleSecretTaskStart: () => handleSecretTaskStart(),
+      buyJokerSecretly: () => buyJokerSecretly(),
+      declineJokerSecretly: () => declineJokerSecretly(),
+      completeTask: () => completeTask(true),
+      startVotingForPlayer: () => startVotingForPlayer(),
+      submitVote: () => submitVote(),
+      continueToNextRound: () => continueToNextRound(),
+      confirmStopGame: () => confirmStopGame(),
+      applyJokerEdit: () => applyJokerEdit(),
+      skipJokerEdit: () => skipJokerEdit(),
+      reloadPage: () => window.location.reload(),
+      installApp: () => { if (typeof window.installApp === 'function') window.installApp(); },
+      closeModal: () => closeModal()
+    });
+
+    document.addEventListener('click', event => {
+      const button = event.target.closest('[data-action]');
+      if (!button) return;
+
+      const handler = actionHandlers[button.dataset.action];
+      if (typeof handler === 'function') {
+        handler();
+      }
+    });
+
+    // ==========================================
+    // PWA: offline, installeren, scherm aan houden
+    // ==========================================
+    (function setupPwa() {
+      const statusEl = document.getElementById('pwa-status');
+      const installBtn = document.getElementById('btn-install');
+      const statsEl = document.getElementById('word-stats');
+      let deferredPrompt = null;
+      let wakeLock = null;
+      let wantWakeLock = false;
+
+      function setStatus(text, cls) {
+        if (!statusEl) return;
+        statusEl.textContent = text;
+        statusEl.className = 'pwa-status' + (cls ? ' ' + cls : '');
+      }
+
+      function refreshOnlineStatus(ready) {
+        if (!navigator.onLine) {
+          setStatus('📴 Geen internet nodig — het spel werkt offline.', 'ok');
+        } else if (ready) {
+          setStatus('✅ Klaar voor offline gebruik (geen wifi nodig).', 'ok');
+        }
+      }
+
+      if (statsEl && window.WORD_STATS) {
+        statsEl.textContent =
+          `${window.WORD_STATS.taboo} omschrijf-woorden · ${window.WORD_STATS.draw} uitbeeld-woorden`;
+      }
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./service-worker.js', { scope: './' })
+            .then(reg => {
+              if (navigator.serviceWorker.controller || reg.active) {
+                refreshOnlineStatus(true);
+              }
+              navigator.serviceWorker.ready.then(() => refreshOnlineStatus(true));
+              // Zoek stilletjes naar updates zodra er internet is.
+              reg.update().catch(() => {});
+            })
+            .catch(() => {
+              setStatus('Offline-modus niet beschikbaar in deze browser.', 'warn');
+            });
+
+          // Vraag de browser om de opslag niet te wissen (belangrijk voor offline gebruik).
+          if (navigator.storage && navigator.storage.persist) {
+            navigator.storage.persist().catch(() => {});
+          }
+        });
+
+        navigator.serviceWorker.addEventListener('message', event => {
+          if (event.data && event.data.type === 'CACHE_READY') {
+            refreshOnlineStatus(true);
+          }
+        });
+      } else {
+        setStatus('Offline-modus niet beschikbaar in deze browser.', 'warn');
+      }
+
+      window.addEventListener('online', () => refreshOnlineStatus(true));
+      window.addEventListener('offline', () => refreshOnlineStatus(true));
+
+      // Installeren (Android/Chrome/Edge). iPhone: Deel-knop > "Zet op beginscherm".
+      window.addEventListener('beforeinstallprompt', event => {
+        event.preventDefault();
+        deferredPrompt = event;
+        if (installBtn) installBtn.style.display = 'flex';
+      });
+
+      window.addEventListener('appinstalled', () => {
+        deferredPrompt = null;
+        if (installBtn) installBtn.style.display = 'none';
+      });
+
+      window.installApp = async function () {
+        if (!deferredPrompt) return;
+        deferredPrompt.prompt();
+        try { await deferredPrompt.userChoice; } catch (e) { /* genegeerd */ }
+        deferredPrompt = null;
+        if (installBtn) installBtn.style.display = 'none';
+      };
+
+      const isIos = /iphone|ipad|ipod/i.test(navigator.userAgent);
+      const isStandalone =
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+      if (isIos && !isStandalone && statsEl) {
+        statsEl.textContent += ' — Tip: tik op Deel en kies "Zet op beginscherm".';
+      }
+
+      // Scherm aan houden tijdens het spel (timer loopt door).
+      async function acquireWakeLock() {
+        if (!('wakeLock' in navigator)) return;
+        try {
+          wakeLock = await navigator.wakeLock.request('screen');
+          wakeLock.addEventListener('release', () => { wakeLock = null; });
+        } catch (e) { /* niet toegestaan, geen probleem */ }
+      }
+
+      window.keepScreenAwake = function () {
+        wantWakeLock = true;
+        acquireWakeLock();
+      };
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible' && wantWakeLock && !wakeLock) {
+          acquireWakeLock();
+        }
+      });
+    })();
+    </script>
+  <script src="woorden.js"></script>
+</body>
+</html>
